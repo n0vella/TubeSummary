@@ -1,1 +1,11 @@
 @import 'tailwindcss';
+
+input:focus {
+  outline: none;
+}
+
+.bg-background {
+  background-color: var(--yt-spec-raised-background) !important;
+  border: 1px solid;
+  border-color: var(--ytd-searchbox-border-color);
+}
