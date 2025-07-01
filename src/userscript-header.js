@@ -7,6 +7,7 @@
 // @match   https://www.youtube.com/watch*
 // @grant   GM_getResourceText
 // @grant   GM_addStyle
+// @grant   GM_xmlhttpRequest
 // @run-at document-idle
 // @resource css {{css}}
 // ==/UserScript==

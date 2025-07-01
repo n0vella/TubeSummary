@@ -1,10 +1,15 @@
 import { render } from 'preact'
 import { useState } from 'preact/hooks'
+import { ask } from './modules/chat'
 
 function SummaryPanel() {
+  const [summary, setSummary] = useState('Loading summary')
+
+  ask().then((response) => setSummary(response))
+
   return (
     <div id="yt-summary-panel" className="m-2 flex min-h-20 w-full flex-col gap-2 rounded-lg bg-red-300 !p-3">
-      <div className="bg-background w-full rounded-lg !p-2 !px-3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam nisi officia velit ratione, natus reiciendis odio at illo sed excepturi eveniet deserunt. Saepe, non maiores ipsum sapiente aspernatur ipsa odit.</div>
+      <div className="bg-background w-full rounded-lg !p-2 !px-3">{summary}</div>
       <div className="bg-background flex h-12 w-full rounded-lg">
         <input className="w-full !p-2 !px-3" placeholder="Ask about the video"></input>
         <button className="w-12 rounded-r-lg bg-sky-600 !text-white">{'>'}</button>
@@ -24,7 +29,6 @@ function loadDialog() {
 
   if (!panel) {
     const container = document.createElement('div')
-    console.log(description.firstChild)
     description.insertBefore(container, description.firstChild)
     render(<SummaryPanel />, container)
   }
