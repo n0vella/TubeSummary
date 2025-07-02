@@ -5,31 +5,37 @@ import { ask } from './modules/chat'
 function SummaryPanel() {
   const [summary, setSummary] = useState('Loading summary')
 
-  ask().then((response) => setSummary(response))
+  setSummary(
+    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut optio in nobis repellat recusandae totam sint eveniet qui a. Culpa, quos modi commodi provident sed ipsum, asperiores magnam odit minus maxime libero, soluta explicabo odio harum temporibus nihil. Magnam voluptas, harum quas dolores sint hic minima. Iure, iste aut itaque quos deserunt rem totam? Quos beatae repellat necessitatibus exercitationem id, amet, laboriosam perspiciatis, perferendis suscipit officiis incidunt ea dolorum! Recusandae repellendus harum dolor blanditiis tenetur, error numquam laudantium quisquam quam deserunt quibusdam aperiam corrupti dolore porro sit perspiciatis consequuntur aliquam praesentium fugit molestiae earum, suscipit asperiores pariatur consequatur. Numquam sed doloribus repellendus cumque reiciendis vitae sint. Assumenda, vero commodi ullam rem porro corrupti ipsam, qui error tempore eos ut. Veniam provident, sapiente sequi nam quia maxime a nemo quis amet similique tempore vero, laboriosam deserunt, sunt temporibus. Similique doloremque delectus id repellat animi, aliquam nam distinctio autem impedit velit eum cumque omnis voluptas fugit neque eius earum explicabo at nesciunt! Maxime officia accusantium repudiandae atque quia consequatur ea quam dolorum quas cupiditate quo explicabo nulla culpa laudantium quasi, doloribus odit neque amet, blanditiis rerum. Cum voluptatum fuga sequi, perspiciatis ratione earum. Laboriosam iste obcaecati ea iure voluptatem velit, vitae dolorem?',
+  )
+
+  // ask().then((response) => setSummary(response))
 
   return (
-    <div id="yt-summary-panel" className="m-2 flex min-h-20 w-full flex-col gap-2 rounded-lg bg-red-300 !p-3">
-      <div className="bg-background w-full rounded-lg !p-2 !px-3">{summary}</div>
-      <div className="bg-background flex h-12 w-full rounded-lg">
-        <input className="w-full !p-2 !px-3" placeholder="Ask about the video"></input>
-        <button className="w-12 rounded-r-lg bg-sky-600 !text-white">{'>'}</button>
+    <div id="yt-summary-panel" className="description-like !mt-8 flex w-full flex-col gap-5">
+      <div>{summary}</div>
+
+      <div id="chat-box" className="flex h-12 w-full">
+        <input className="!mx-2 w-full !px-1 !py-0.5" placeholder="Ask about the video"></input>
+        <button className="w-10 cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" className="icon-tabler">
+            <path d="M4.698 4.034l16.302 7.966l-16.302 7.966a.503 .503 0 0 1 -.546 -.124a.555 .555 0 0 1 -.12 -.568l2.468 -7.274l-2.468 -7.274a.555 .555 0 0 1 .12 -.568a.503 .503 0 0 1 .546 -.124z" />
+            <path d="M6.5 12h14.5" />
+          </svg>
+        </button>
       </div>
     </div>
   )
 }
 
 function loadDialog() {
-  const description = document.querySelector<HTMLDivElement>('#bottom-row > #description')
+  const bottomRow = document.querySelector<HTMLDivElement>('#bottom-row')!
 
-  if (!description) {
-    throw new Error("Couldn't find description <div>")
-  }
-
-  const panel = description.querySelector<HTMLDivElement>('#yt-summary-panel')
+  const panel = bottomRow.querySelector<HTMLDivElement>('#yt-summary-panel')
 
   if (!panel) {
     const container = document.createElement('div')
-    description.insertBefore(container, description.firstChild)
+    bottomRow.insertBefore(container, bottomRow.firstChild)
     render(<SummaryPanel />, container)
   }
 }

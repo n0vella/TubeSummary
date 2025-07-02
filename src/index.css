@@ -4,8 +4,21 @@ input:focus {
   outline: none;
 }
 
-.bg-background {
-  background-color: var(--yt-spec-raised-background) !important;
-  border: 1px solid;
-  border-color: var(--ytd-searchbox-border-color);
+.description-like {
+  background-color: var(--yt-spec-badge-chip-background) !important;
+  font-family: 'Roboto', 'Arial', sans-serif !important;
+  font-size: 1.4rem !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
+  color: var(--yt-spec-text-primary) !important;
+}
+
+#chat-box > input {
+  border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
+}
+:focus {
+  border-bottom: 1.5px solid var(--yt-spec-text-primary) !important;
+}
+::first-letter {
+  text-transform: uppercase;
 }
