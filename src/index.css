@@ -22,3 +22,21 @@ input:focus {
 ::first-letter {
   text-transform: uppercase;
 }
+
+.markdown-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  > ul {
+    list-style-type: disc;
+    padding-left: 30px;
+  }
+  > ol {
+    list-style-type: decimal;
+    padding-left: 30px;
+  }
+  > h1 {
+    @apply text-lg font-semibold;
+  }
+}

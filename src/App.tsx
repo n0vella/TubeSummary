@@ -1,19 +1,19 @@
 import { render } from 'preact'
 import { useState } from 'preact/hooks'
 import { ask } from './modules/chat'
+import { marked } from 'marked'
+import { useEffect } from 'react'
 
 function SummaryPanel() {
   const [summary, setSummary] = useState('Loading summary')
 
-  setSummary(
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut optio in nobis repellat recusandae totam sint eveniet qui a. Culpa, quos modi commodi provident sed ipsum, asperiores magnam odit minus maxime libero, soluta explicabo odio harum temporibus nihil. Magnam voluptas, harum quas dolores sint hic minima. Iure, iste aut itaque quos deserunt rem totam? Quos beatae repellat necessitatibus exercitationem id, amet, laboriosam perspiciatis, perferendis suscipit officiis incidunt ea dolorum! Recusandae repellendus harum dolor blanditiis tenetur, error numquam laudantium quisquam quam deserunt quibusdam aperiam corrupti dolore porro sit perspiciatis consequuntur aliquam praesentium fugit molestiae earum, suscipit asperiores pariatur consequatur. Numquam sed doloribus repellendus cumque reiciendis vitae sint. Assumenda, vero commodi ullam rem porro corrupti ipsam, qui error tempore eos ut. Veniam provident, sapiente sequi nam quia maxime a nemo quis amet similique tempore vero, laboriosam deserunt, sunt temporibus. Similique doloremque delectus id repellat animi, aliquam nam distinctio autem impedit velit eum cumque omnis voluptas fugit neque eius earum explicabo at nesciunt! Maxime officia accusantium repudiandae atque quia consequatur ea quam dolorum quas cupiditate quo explicabo nulla culpa laudantium quasi, doloribus odit neque amet, blanditiis rerum. Cum voluptatum fuga sequi, perspiciatis ratione earum. Laboriosam iste obcaecati ea iure voluptatem velit, vitae dolorem?',
-  )
-
-  // ask().then((response) => setSummary(response))
+  useEffect(() => {
+    ask().then((response) => setSummary(response))
+  }, [])
 
   return (
     <div id="yt-summary-panel" className="description-like !mt-8 flex w-full flex-col gap-5">
-      <div>{summary}</div>
+      <div dangerouslySetInnerHTML={{ __html: marked.parse(summary) as string }} className="markdown-box" />
 
       <div id="chat-box" className="flex h-12 w-full">
         <input className="!mx-2 w-full !px-1 !py-0.5" placeholder="Ask about the video"></input>
