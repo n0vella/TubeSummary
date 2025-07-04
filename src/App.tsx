@@ -5,10 +5,10 @@ import { marked } from 'marked'
 import { useEffect } from 'react'
 
 function SummaryPanel() {
-  const [summary, setSummary] = useState('Loading summary')
+  const [summary, setSummary] = useState('')
 
   useEffect(() => {
-    ask().then((response) => setSummary(response))
+    ask(setSummary)
   }, [])
 
   return (
