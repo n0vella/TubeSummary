@@ -16,11 +16,9 @@ input:focus {
 #chat-box > input {
   border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
 }
-:focus {
+
+#chat-box > input:focus {
   border-bottom: 1.5px solid var(--yt-spec-text-primary) !important;
-}
-::first-letter {
-  text-transform: uppercase;
 }
 
 .markdown-box {
@@ -39,4 +37,9 @@ input:focus {
   > h1 {
     @apply text-lg font-semibold;
   }
+}
+
+div:has(#yt-summary-panel) {
+  width: 100%;
+  margin-right: 12px;
 }
