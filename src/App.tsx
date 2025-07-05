@@ -43,7 +43,7 @@ function SummaryPanel() {
           e.currentTarget.userInput.value = ''
         }}
       >
-        <input name="userInput" autoComplete="off" className="!mx-2 w-full !px-1 !py-0.5" placeholder="Ask about the video"></input>
+        <input name="userInput" autoComplete="off" className="!mx-2 w-full !px-1 !py-0.5" placeholder="Make your questions about this video"></input>
         <button className="w-10 cursor-pointer">{send}</button>
       </form>
     </div>
@@ -54,7 +54,7 @@ export default function App() {
   const [dialogLoaded, setDialogLoaded] = useState(false)
   const root = useRef<ReturnType<typeof createRoot>>(null)
   const [showContext, setShowContext] = useState(false)
-  const [showSettings, setShowSettings] = useState(true)
+  const [showSettings, setShowSettings] = useState(false)
   const settings = GM_getValue<Settings>('settings')
 
   function closeDialog() {

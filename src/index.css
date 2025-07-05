@@ -13,12 +13,16 @@ input:focus {
   color: var(--yt-spec-text-primary) !important;
 }
 
+#chat-box {
+  padding: 0 20px !important;
+}
+
 #chat-box > input {
   border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
 }
 
 #chat-box > input:focus {
-  border-bottom: 2.5px solid var(--yt-spec-text-primary) !important;
+  border-bottom: 2px solid var(--yt-spec-text-primary) !important;
 }
 
 .markdown-box {
