@@ -19,3 +19,7 @@ export interface YoutubeApiData {
 }
 
 export type Message = { role: string; content: string }
+
+export interface Settings {
+  prompt: string
+}

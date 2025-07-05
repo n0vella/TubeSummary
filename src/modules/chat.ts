@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Message } from '.'
+import { Message } from '..'
 import { getTranscript } from './youtube'
+import { Settings } from '..'
 
 const endpoint = 'https://api.cerebras.ai/v1/chat/completions'
 const modelName = 'llama-4-scout-17b-16e-instruct'
@@ -67,13 +68,19 @@ export function useChat(): [Message[], typeof ask, boolean] {
   }
 
   async function loadSummary() {
-    const transcript = await getTranscript()
+    const transcript = (await getTranscript()) ?? ''
+    const settings = GM_getValue<Settings>('settings')
+
+    if (!settings.prompt.includes('{transcription}')) {
+      throw 'Prompt must contain "{transcription}" flag'
+    }
+
+    const prompt = settings.prompt.replace('{transcription}', transcript)
+
     const messages: Message[] = [
       {
         role: 'system',
-        content: `Resume el siguiente video a partir de su transcripción.
-          ${transcript}
-          `,
+        content: prompt,
       },
     ]
 

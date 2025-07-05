@@ -72,8 +72,14 @@ div:has(#yt-summary-panel) {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
+  box-shadow: 0 4px 32px 0 var(--yt-spec-static-overlay-background-light);
+  gap: 5px;
 }
 
 .context-menu > button:hover {
   background-color: var(--yt-spec-10-percent-layer);
+}
+
+button {
+  cursor: pointer !important;
 }

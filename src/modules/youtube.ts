@@ -1,4 +1,4 @@
-import { YoutubeApiData } from '.'
+import { YoutubeApiData } from '..'
 
 async function fetchVideoData(videoId: string): Promise<YoutubeApiData> {
   // https://stackoverflow.com/questions/67615278/get-video-info-youtube-endpoint-suddenly-returning-404-not-found/68492807#68492807

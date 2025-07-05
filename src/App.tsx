@@ -3,8 +3,9 @@ import { useState } from 'preact/hooks'
 import { useChat } from './modules/chat'
 import { marked } from 'marked'
 import { useEffect, useRef } from 'react'
-import { brain, closeIcon, gear, send } from './Icons'
+import { brain, closeIcon, floppy, gear, send } from './Icons'
 import { createRoot } from 'preact/compat/client'
+import { Settings } from '.'
 
 function SummaryPanel() {
   const [chat, ask, isResponding] = useChat()
@@ -53,6 +54,8 @@ export default function App() {
   const [dialogLoaded, setDialogLoaded] = useState(false)
   const root = useRef<ReturnType<typeof createRoot>>(null)
   const [showContext, setShowContext] = useState(false)
+  const [showSettings, setShowSettings] = useState(true)
+  const settings = GM_getValue<Settings>('settings')
 
   function closeDialog() {
     setDialogLoaded(false)
@@ -97,12 +100,40 @@ export default function App() {
               className="flex items-center gap-2 px-2 text-lg"
               onClick={() => {
                 setShowContext(false)
+                setShowSettings(true)
               }}
             >
               <span className="w-12">{gear}</span>
               <span>Settings</span>
             </button>
           </div>
+        </>
+      )}
+      {showSettings && (
+        <>
+          <div className="context-close" onClick={() => setShowSettings(false)} />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              GM_setValue('settings', {
+                ...settings,
+                prompt: e.currentTarget.prompt.value,
+              })
+              setShowSettings(false)
+            }}
+            className="context-menu fixed top-1/2 left-1/2 h-[400px] w-[600px] -translate-1/2 !px-3"
+          >
+            <h1 className="text-4xl">Settings</h1>
+            <h2 className="text-3xl">Prompt</h2>
+            <span text-lg>{'Insert the flag {transcription} to be replaced by the actual transcription'}</span>
+            <textarea name="prompt" className="description-like flex h-full min-h-20 w-full resize-none outline-none" defaultValue={settings.prompt}></textarea>
+            <div className="flex justify-center gap-5">
+              <button className="w-16 rounded-lg bg-green-500 p-1 text-white">{floppy}</button>
+              <button type="button" onClick={() => setShowSettings(false)} className="w-16 rounded-lg bg-red-500 p-1 text-white">
+                {closeIcon}
+              </button>
+            </div>
+          </form>
         </>
       )}
     </div>

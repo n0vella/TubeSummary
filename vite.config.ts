@@ -20,8 +20,8 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       minify: false,
       outDir: 'dist',
       lib: {
-        entry: 'src/index.tsx',
-        name: 'index',
+        entry: 'src/main.tsx',
+        name: 'main',
         fileName: () => 'index.user.js',
         formats: ['iife'],
       },
