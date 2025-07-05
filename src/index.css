@@ -25,6 +25,10 @@ input:focus {
   border-bottom: 2px solid var(--yt-spec-text-primary) !important;
 }
 
+#chat-box > button:hover {
+  stroke-width: 1.5px;
+}
+
 .markdown-box {
   display: flex;
   flex-direction: column;
