@@ -1,9 +1,5 @@
 @import 'tailwindcss';
 
-input:focus {
-  outline: none;
-}
-
 .description-like {
   background-color: var(--yt-spec-badge-chip-background) !important;
   font-family: 'Roboto', 'Arial', sans-serif !important;
@@ -17,11 +13,11 @@ input:focus {
   padding: 0 20px !important;
 }
 
-#chat-box > input {
+#chat-box > textarea {
   border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
 }
 
-#chat-box > input:focus {
+#chat-box > textarea:focus {
   border-bottom: 2px solid var(--yt-spec-text-primary) !important;
 }
 

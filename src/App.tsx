@@ -35,9 +35,10 @@ function SummaryPanel() {
 
       <form
         id="chat-box"
-        className="!mx-4 flex h-12 w-full"
+        className="!mx-4 flex w-full"
         hidden={isResponding}
         onSubmit={(e) => {
+          console.log(e.currentTarget.userInput.value)
           e.preventDefault()
           const value = e.currentTarget.userInput.value
 
@@ -49,7 +50,17 @@ function SummaryPanel() {
           e.currentTarget.userInput.value = ''
         }}
       >
-        <input name="userInput" autoComplete="off" className="!mx-2 w-full !px-1 !py-0.5" placeholder="Make your questions about this video"></input>
+        <textarea
+          name="userInput"
+          autoComplete="off"
+          className="!mx-2 w-full resize-none !px-1 !py-0.5 outline-none"
+          placeholder="Make your questions about this video"
+          rows={1}
+          onInput={(e) => {
+            const self = e.currentTarget
+            self.style.height = self.scrollHeight + 'px'
+          }}
+        ></textarea>
         <button className="w-10 cursor-pointer">{send}</button>
       </form>
     </div>
