@@ -24,6 +24,7 @@ export function useChat(): [Message[], typeof ask, boolean] {
       max_tokens: 2048,
       temperature: 0.2,
       top_p: 1,
+      reasoning_format: 'hidden',
     }
 
     GM_xmlhttpRequest({
@@ -35,7 +36,16 @@ export function useChat(): [Message[], typeof ask, boolean] {
         Authorization: 'Bearer ' + settings.apiKey,
       },
       onloadend: () => setIsresponging(false),
-      onabort: () => setIsresponging(false),
+      onabort: () => {
+        setIsresponging(false)
+        setChat([
+          ...messages,
+          {
+            role: 'assistant',
+            content: "There was a problem with model's response. See console for more info",
+          },
+        ])
+      },
       onprogress: function (response) {
         let responses
         let result = ''
@@ -55,11 +65,11 @@ export function useChat(): [Message[], typeof ask, boolean] {
                 if (delta) {
                   result += delta
                 }
-              } catch {} // let's ignore invalid chunks for now
+              } catch {
+                error('Could not parse delta in chunk', response)
+              }
             }
           }
-
-          if (!result) throw 'No result'
         } catch (exc) {
           error(`There was a problem with model's response: ${exc}\n`, response)
           result = "There was a problem with model's response. See console for more info"
