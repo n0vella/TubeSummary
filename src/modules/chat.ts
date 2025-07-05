@@ -32,7 +32,6 @@ export function useChat(): [Message[], typeof ask, boolean] {
       data: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
-        // @ts-ignore
         Authorization: 'Bearer ' + settings.apiKey,
       },
       onloadend: () => setIsresponging(false),
@@ -49,18 +48,20 @@ export function useChat(): [Message[], typeof ask, boolean] {
           for (const response of responses) {
             if (response) {
               const parseableResponse = '{' + response.replace('data: ', '"data": ') + '}'
-              const data = JSON.parse(parseableResponse).data
-              const delta = data.choices[0].delta.content
+              try {
+                const data = JSON.parse(parseableResponse).data
+                const delta = data.choices[0].delta.content
 
-              if (delta) {
-                result += delta
-              }
+                if (delta) {
+                  result += delta
+                }
+              } catch {} // let's ignore invalid chunks for now
             }
           }
 
           if (!result) throw 'No result'
-        } catch {
-          error("There was a problem with model's response.", response)
+        } catch (exc) {
+          error(`There was a problem with model's response: ${exc}\n`, response)
           result = "There was a problem with model's response. See console for more info"
         }
 
