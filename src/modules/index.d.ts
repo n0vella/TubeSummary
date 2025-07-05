@@ -1,3 +1,5 @@
+import '@violentmonkey/types'
+
 interface CaptionTrack {
   baseUrl: string
 }
@@ -15,3 +17,5 @@ export interface YoutubeApiData {
     }
   }
 }
+
+export type Message = { role: string; content: string }

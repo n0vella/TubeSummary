@@ -43,3 +43,12 @@ div:has(#yt-summary-panel) {
   width: 100%;
   margin-right: 12px;
 }
+
+.chat-avatar {
+  display: flex;
+  width: 35px;
+  height: 35px;
+  padding: 2px;
+  margin-bottom: auto;
+  border-radius: 100%;
+}

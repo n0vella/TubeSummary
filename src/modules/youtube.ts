@@ -49,7 +49,14 @@ async function fetchVideoData(videoId: string): Promise<YoutubeApiData> {
   return await r.json()
 }
 
-export async function getTranscript(videoId: string) {
+export async function getTranscript() {
+  const videoId = new URLSearchParams(window.location.search).get('v')
+
+  if (!videoId) {
+    throw "Couldn't get video id"
+    return
+  }
+
   const data = await fetchVideoData(videoId)
 
   const captions = data.captions.playerCaptionsTracklistRenderer
