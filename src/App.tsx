@@ -26,7 +26,7 @@ function SummaryPanel() {
           case 'user':
             return (
               <div className="flex w-full justify-end gap-5 text-right align-top">
-                <div dangerouslySetInnerHTML={{ __html: marked.parse(content) as string }} className="markdown-box justify-end" />
+                <div className="markdown-box justify-end whitespace-pre-line">{content}</div>
                 <img src={avatarUrl} className="chat-avatar" />
               </div>
             )
@@ -38,7 +38,6 @@ function SummaryPanel() {
         className="!mx-4 flex w-full"
         hidden={isResponding}
         onSubmit={(e) => {
-          console.log(e.currentTarget.userInput.value)
           e.preventDefault()
           const value = e.currentTarget.userInput.value
 
