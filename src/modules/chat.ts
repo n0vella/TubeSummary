@@ -5,14 +5,18 @@ import { getTranscript } from './youtube'
 const endpoint = 'https://api.cerebras.ai/v1/chat/completions'
 const modelName = 'llama-4-scout-17b-16e-instruct'
 
-export function useChat(): [typeof chat, typeof ask] {
+export function useChat(): [Message[], typeof ask, boolean] {
   const [chat, setChat] = useState<Message[]>([])
+  const [isResponding, setIsresponging] = useState(true)
 
   useEffect(() => {
     loadSummary()
   }, [])
 
   function loadModelResponse(messages: Message[]) {
+    setIsresponging(true)
+    setChat(messages)
+
     const body = {
       messages,
       model: modelName,
@@ -31,7 +35,8 @@ export function useChat(): [typeof chat, typeof ask] {
         // @ts-ignore
         Authorization: 'Bearer ' + import.meta.env.VITE_CEREBRAS_TOKEN,
       },
-
+      onloadend: () => setIsresponging(false),
+      onabort: () => setIsresponging(false),
       onprogress: function (response) {
         const responses = response.responseText?.split('\n')
 
@@ -87,5 +92,5 @@ export function useChat(): [typeof chat, typeof ask] {
     loadModelResponse(newChat)
   }
 
-  return [chat, ask]
+  return [chat, ask, isResponding]
 }

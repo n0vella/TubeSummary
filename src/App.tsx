@@ -6,10 +6,12 @@ import { useEffect } from 'react'
 import { brain, send } from './Icons'
 
 function SummaryPanel() {
-  const [chat, ask] = useChat()
+  const [chat, ask, isResponding] = useChat()
+  const avatarUrl = document.querySelector<HTMLImageElement>('#img')?.src
 
   return (
-    <div id="yt-summary-panel" className="description-like !mt-8 flex w-full flex-col gap-5">
+    <div id="yt-summary-panel" className="description-like !mt-8 flex w-full flex-col gap-10">
+      {chat.length === 0 && <div className="flex !h-24 animate-pulse justify-center">{brain}</div>}
       {chat.map(({ role, content }) => {
         switch (role) {
           case 'assistant':
@@ -22,8 +24,8 @@ function SummaryPanel() {
           case 'user':
             return (
               <div className="flex w-full justify-end gap-5 text-right align-top">
-                <div dangerouslySetInnerHTML={{ __html: marked.parse(content) as string }} className="markdown-box" />
-                <span className="chat-avatar !bg-blue-500 !p-1 !text-white">{brain}</span>
+                <div dangerouslySetInnerHTML={{ __html: marked.parse(content) as string }} className="markdown-box justify-end" />
+                <img src={avatarUrl} className="chat-avatar" />
               </div>
             )
         }
@@ -31,7 +33,8 @@ function SummaryPanel() {
 
       <form
         id="chat-box"
-        className="flex h-12 w-full"
+        className="mx-4 flex h-12 w-full"
+        hidden={isResponding}
         onSubmit={(e) => {
           e.preventDefault()
           ask(e.currentTarget.userInput.value)

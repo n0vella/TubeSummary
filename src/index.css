@@ -18,7 +18,7 @@ input:focus {
 }
 
 #chat-box > input:focus {
-  border-bottom: 1.5px solid var(--yt-spec-text-primary) !important;
+  border-bottom: 2.5px solid var(--yt-spec-text-primary) !important;
 }
 
 .markdown-box {
