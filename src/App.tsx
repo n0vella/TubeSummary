@@ -2,8 +2,9 @@ import { render } from 'preact'
 import { useState } from 'preact/hooks'
 import { useChat } from './modules/chat'
 import { marked } from 'marked'
-import { useEffect } from 'react'
-import { brain, send } from './Icons'
+import { useEffect, useRef } from 'react'
+import { brain, closeIcon, send } from './Icons'
+import { createRoot } from 'preact/compat/client'
 
 function SummaryPanel() {
   const [chat, ask, isResponding] = useChat()
@@ -48,24 +49,34 @@ function SummaryPanel() {
   )
 }
 
-function loadDialog() {
-  const bottomRow = document.querySelector<HTMLDivElement>('#bottom-row')!
-
-  const panel = bottomRow.querySelector<HTMLDivElement>('#yt-summary-panel')
-
-  if (!panel) {
-    const container = document.createElement('div')
-    bottomRow.insertBefore(container, bottomRow.firstChild)
-    render(<SummaryPanel />, container)
-  }
-}
-
 export default function App() {
+  const [dialogLoaded, setDialogLoaded] = useState(false)
+  const root = useRef<ReturnType<typeof createRoot>>(null)
+
+  function closeDialog() {
+    setDialogLoaded(false)
+    root.current?.unmount()
+  }
+
+  function loadDialog() {
+    setDialogLoaded(true)
+    const bottomRow = document.querySelector<HTMLDivElement>('#bottom-row')!
+
+    const panel = bottomRow.querySelector<HTMLDivElement>('#yt-summary-panel')
+
+    if (!panel) {
+      const container = document.createElement('div')
+      root.current = createRoot(container)
+
+      bottomRow.insertBefore(container, bottomRow.firstChild)
+
+      root.current.render(<SummaryPanel />)
+    }
+  }
+
   return (
-    <button title="Generate summary" className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer items-center justify-center rounded-full p-2" onClick={loadDialog}>
-      {brain}
+    <button title={dialogLoaded ? 'Close summary' : 'Generate summary'} className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full p-2" onClick={dialogLoaded ? closeDialog : loadDialog}>
+      {dialogLoaded ? closeIcon : brain}
     </button>
   )
 }
-
-// yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button yt-spec-button-shape-next--enable-backdrop-filter-experiment
