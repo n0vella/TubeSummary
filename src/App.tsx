@@ -11,6 +11,18 @@ function SummaryPanel() {
   const [chat, ask, isResponding] = useChat()
   const avatarUrl = document.querySelector<HTMLImageElement>('#img')?.src
 
+  function submit(e) {
+    e.preventDefault()
+    const value = e.currentTarget.userInput.value
+
+    if (!value) {
+      return
+    }
+
+    ask(value)
+    e.currentTarget.userInput.value = ''
+  }
+
   return (
     <div id="yt-summary-panel" className="description-like !mt-8 flex w-full flex-col gap-10">
       {chat.length === 0 && <div className="flex !h-24 animate-pulse justify-center">{brain}</div>}
@@ -37,16 +49,12 @@ function SummaryPanel() {
         id="chat-box"
         className="!mx-4 flex w-full"
         hidden={isResponding}
-        onSubmit={(e) => {
-          e.preventDefault()
-          const value = e.currentTarget.userInput.value
-
-          if (!value) {
-            return
+        onSubmit={submit}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            // allow multiple line writing with shift, send with enter
+            submit(e)
           }
-
-          ask(value)
-          e.currentTarget.userInput.value = ''
         }}
       >
         <textarea
