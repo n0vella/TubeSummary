@@ -39,7 +39,13 @@ function SummaryPanel() {
         hidden={isResponding}
         onSubmit={(e) => {
           e.preventDefault()
-          ask(e.currentTarget.userInput.value)
+          const value = e.currentTarget.userInput.value
+
+          if (!value) {
+            return
+          }
+
+          ask(value)
           e.currentTarget.userInput.value = ''
         }}
       >
