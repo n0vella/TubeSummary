@@ -22,4 +22,7 @@ export type Message = { role: string; content: string }
 
 export interface Settings {
   prompt: string
+  endpoint: string
+  model: string
+  apiKey: string
 }

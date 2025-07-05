@@ -1,3 +1,6 @@
 {
-    "prompt": "Resume this video transcription, use first person, like the video where this short, just return the summary.\n{transcription}"
+    "prompt": "Summarize the key ideas from the video in a way that they could be included in the script as a final summary section.\n---\n{transcription}",
+    "endpoint": "",
+    "model": "",
+    "apiKey": ""
 }

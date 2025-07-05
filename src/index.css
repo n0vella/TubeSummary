@@ -13,11 +13,12 @@
   padding: 0 20px !important;
 }
 
-#chat-box > textarea {
+.user-input {
+  outline: none;
   border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
 }
 
-#chat-box > textarea:focus {
+.user-input:focus {
   border-bottom: 2px solid var(--yt-spec-text-primary) !important;
 }
 

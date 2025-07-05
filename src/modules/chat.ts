@@ -3,12 +3,10 @@ import { Message } from '..'
 import { getTranscript } from './youtube'
 import { Settings } from '..'
 
-const endpoint = 'https://api.cerebras.ai/v1/chat/completions'
-const modelName = 'llama-4-scout-17b-16e-instruct'
-
 export function useChat(): [Message[], typeof ask, boolean] {
   const [chat, setChat] = useState<Message[]>([])
   const [isResponding, setIsresponging] = useState(true)
+  const settings = GM_getValue<Settings>('settings')
 
   useEffect(() => {
     loadSummary()
@@ -20,7 +18,7 @@ export function useChat(): [Message[], typeof ask, boolean] {
 
     const body = {
       messages,
-      model: modelName,
+      model: settings.model,
       stream: true,
       max_tokens: 2048,
       temperature: 0.2,
@@ -29,12 +27,12 @@ export function useChat(): [Message[], typeof ask, boolean] {
 
     GM_xmlhttpRequest({
       method: 'POST',
-      url: endpoint,
+      url: settings.endpoint,
       data: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
         // @ts-ignore
-        Authorization: 'Bearer ' + import.meta.env.VITE_CEREBRAS_TOKEN,
+        Authorization: 'Bearer ' + settings.apiKey,
       },
       onloadend: () => setIsresponging(false),
       onabort: () => setIsresponging(false),
