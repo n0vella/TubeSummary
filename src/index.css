@@ -52,3 +52,28 @@ div:has(#yt-summary-panel) {
   margin-bottom: auto;
   border-radius: 100%;
 }
+
+.context-close {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 500;
+  opacity: 10%;
+}
+
+.context-menu {
+  background: var(--paper-listbox-background-color, var(--primary-background-color));
+  color: var(--paper-listbox-color, var(--primary-text-color));
+  padding: 8px 0;
+  border: var(--paper-listbox-border);
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.context-menu > button:hover {
+  background-color: var(--yt-spec-10-percent-layer);
+}

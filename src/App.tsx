@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks'
 import { useChat } from './modules/chat'
 import { marked } from 'marked'
 import { useEffect, useRef } from 'react'
-import { brain, closeIcon, send } from './Icons'
+import { brain, closeIcon, gear, send } from './Icons'
 import { createRoot } from 'preact/compat/client'
 
 function SummaryPanel() {
@@ -34,7 +34,7 @@ function SummaryPanel() {
 
       <form
         id="chat-box"
-        className="mx-4 flex h-12 w-full"
+        className="!mx-4 flex h-12 w-full"
         hidden={isResponding}
         onSubmit={(e) => {
           e.preventDefault()
@@ -52,6 +52,7 @@ function SummaryPanel() {
 export default function App() {
   const [dialogLoaded, setDialogLoaded] = useState(false)
   const root = useRef<ReturnType<typeof createRoot>>(null)
+  const [showContext, setShowContext] = useState(false)
 
   function closeDialog() {
     setDialogLoaded(false)
@@ -75,8 +76,35 @@ export default function App() {
   }
 
   return (
-    <button title={dialogLoaded ? 'Close summary' : 'Generate summary'} className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full p-2" onClick={dialogLoaded ? closeDialog : loadDialog}>
-      {dialogLoaded ? closeIcon : brain}
-    </button>
+    <div className="relative">
+      <button
+        title={dialogLoaded ? 'Close summary' : 'Generate summary'}
+        className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full p-2"
+        onClick={dialogLoaded ? closeDialog : loadDialog}
+        onContextMenu={(e) => {
+          e.preventDefault()
+          setShowContext(true)
+        }}
+      >
+        {dialogLoaded ? closeIcon : brain}
+      </button>
+      {showContext && (
+        <>
+          <div className="context-close" onClick={() => setShowContext(false)} />
+
+          <div className="context-menu absolute top-0 left-0 translate-8">
+            <button
+              className="flex items-center gap-2 px-2 text-lg"
+              onClick={() => {
+                setShowContext(false)
+              }}
+            >
+              <span className="w-12">{gear}</span>
+              <span>Settings</span>
+            </button>
+          </div>
+        </>
+      )}
+    </div>
   )
 }
