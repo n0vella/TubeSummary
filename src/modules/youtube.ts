@@ -61,7 +61,13 @@ export async function getTranscript() {
 
   const captions = data.captions.playerCaptionsTracklistRenderer
 
-  const defaultCaptionLanguage = captions.audioTracks[0].defaultCaptionTrackIndex ?? captions.defaultAudioTrackIndex ?? 0
+  let defaultCaptionLanguage = captions.audioTracks[0].defaultCaptionTrackIndex ?? captions.defaultAudioTrackIndex ?? 0
+
+  if (defaultCaptionLanguage > captions.captionTracks.length) {
+    // defaultCaptionLanguage could be a large number on audio-translated videos
+    // TODO: check if this solution works in every case
+    defaultCaptionLanguage = 0
+  }
 
   const captionsUrl = captions.captionTracks[defaultCaptionLanguage].baseUrl
 
