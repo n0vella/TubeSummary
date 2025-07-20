@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 512 512"
+   fill="none"
+   stroke="currentColor"
+   stroke-width="2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   class="icon icon-tabler icons-tabler-outline icon-tabler-brain"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   inkscape:export-filename="icon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs20" />
+  <sodipodi:namedview
+     id="namedview18"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.5234375"
+     inkscape:cx="-37.253731"
+     inkscape:cy="398.32836"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg16" />
+  <circle
+     style="opacity:1;fill:#fb2c36;fill-opacity:1;stroke:none;stroke-width:0.0239809"
+     id="path301"
+     cx="256"
+     cy="256"
+     r="256" />
+  <path
+     stroke="none"
+     d="M 10.24,10.24 H 501.76 V 501.76 H 10.24 Z"
+     fill="none"
+     id="path2"
+     style="stroke-width:40.96" />
+  <g
+     id="g9665"
+     transform="matrix(20.48,0,0,20.48,0,-10.24)">
+    <path
+       d="m 16,14 a 3.5,3.5 0 0 0 -3.5,3.5 v 1 a 3.5,3.5 0 0 0 7,0 v -1.8"
+       id="path4"
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:none" />
+    <path
+       d="M 9.0000001,14 A 3.5,3.5 0 0 1 12.5,17.5 v 1 a 3.5000001,3.5000001 0 0 1 -7,0 v -1.8"
+       id="path6"
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:none" />
+    <path
+       d="m 18,17 a 3.5,3.5 0 0 0 0,-7 h -0.5"
+       id="path8"
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:none" />
+    <path
+       d="M 19.5,10.3 V 7.5 a 3.5,3.5 0 0 0 -7,0"
+       id="path10"
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:none" />
+    <path
+       d="M 7,17 A 3.5,3.5 0 0 1 7,10 H 7.5"
+       id="path12"
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:none" />
+    <path
+       d="M 5.5,10.3 V 7.5 a 3.5,3.5 0 0 1 7,0 v 10"
+       id="path14"
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:none" />
+  </g>
+</svg>
