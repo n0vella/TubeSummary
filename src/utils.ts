@@ -1,7 +1,24 @@
-import { CSS_Selector } from '..'
+import { CSS_Selector, Storage } from '.'
 import pkg from '../package.json'
 
 const myConsole = console // save original console, just in case site overwrites handy methods such as log
+
+export const storage: Storage = {
+  set: function (items) {
+    if (chrome.storage) {
+      chrome.storage.local.set(items)
+    } else {
+      browser.storage.local.set(items)
+    }
+  },
+  get: async function (keys) {
+    if (chrome.storage) {
+      return await chrome.storage.local.get(keys)
+    } else {
+      return await browser.storage.local.get(keys)
+    }
+  },
+}
 
 export function log(message: any, ...optionalParams: any[]) {
   myConsole.log(`%c${pkg.name}:`, 'color: orange; font-weight: bold', message, ...optionalParams)

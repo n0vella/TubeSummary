@@ -1,33 +1,64 @@
 import preact from '@preact/preset-vite'
 import { ConfigEnv, UserConfig, defineConfig } from 'vite'
+import archiver from 'archiver'
 import fs from 'fs'
+import { name, version } from './manifest.json'
 import tailwindcss from '@tailwindcss/vite'
-import { version } from './package.json'
 
-function prepareHeader() {
-  const fileContents = fs.readFileSync('src/userscript-header.js', 'utf-8')
+async function createZip() {
+  console.log('Creating zip')
 
-  const css = 'style.css'
+  if (fs.existsSync('build')) {
+    fs.rmSync('build', { recursive: true })
+  }
 
-  return fileContents.replace('{{version}}', version).replace('{{css}}', css)
+  fs.mkdirSync('build')
+
+  fs.cpSync('dist', 'build/dist', { recursive: true })
+  fs.copyFileSync('manifest.json', 'build/manifest.json')
+  fs.copyFileSync('icon.png', 'build/icon.png')
+
+  if (!fs.existsSync('releases')) {
+    fs.mkdirSync('releases')
+  }
+
+  const outputFile = `releases/${name}_${version}.xpi`
+  const output = fs.createWriteStream(outputFile)
+  const archive = archiver('zip')
+
+  archive.pipe(output)
+  archive.directory('build', false)
+  archive.finalize()
+
+  console.log(`Zip saved on ${outputFile}`)
 }
 
 export default defineConfig((mode: ConfigEnv): UserConfig => {
+  const isDevelopment = process.env.WATCH !== undefined
+
   return {
-    plugins: [tailwindcss(), preact()],
+    plugins: [
+      tailwindcss(),
+      preact(),
+      {
+        name: 'Create Zip',
+        writeBundle: isDevelopment ? undefined : createZip,
+      },
+    ],
     build: {
       target: 'esnext',
-      minify: false,
+      minify: !isDevelopment,
+      sourcemap: isDevelopment ? 'inline' : false,
       outDir: 'dist',
       lib: {
         entry: 'src/main.tsx',
-        name: 'main',
-        fileName: () => 'index.user.js',
+        name: 'index',
+        fileName: () => 'index.js',
         formats: ['iife'],
       },
       rollupOptions: {
         output: {
-          banner: () => prepareHeader(),
+          compact: !isDevelopment,
         },
       },
     },

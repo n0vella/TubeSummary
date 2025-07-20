@@ -1,0 +1,35 @@
+{
+    "manifest_version": 2,
+    "name": "TubeSummary",
+    "version": "0.1.0",
+    "description": "Summarizes videos and helps with your questions",
+    "homepage_url": "https://n0vella.github.io",
+    "icons": {
+        "512": "icon.png"
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/*",
+                "https://www.youtube-nocookie.com/*"
+            ],
+            "js": [
+                "dist/index.js"
+            ],
+            "css": [
+                "dist/style.css"
+            ],
+            "all_frames": true
+        }
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{792c6cee-e45d-4f5b-8584-e4ce5993d3c8}"
+        }
+    }
+}
