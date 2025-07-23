@@ -59,6 +59,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       rollupOptions: {
         output: {
           compact: !isDevelopment,
+          assetFileNames: 'index.css',
         },
       },
     },

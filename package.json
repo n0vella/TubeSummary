@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "type": "module",
     "scripts": {
+        "dev:popup": "cross-env WATCH=true vite build --config vite.config.popup.ts --watch",
         "dev": "cross-env WATCH=true vite build --watch",
         "build": "vite build"
     },
