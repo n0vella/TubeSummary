@@ -3,19 +3,20 @@ import pkg from '../package.json'
 
 const myConsole = console // save original console, just in case site overwrites handy methods such as log
 
+const isFirefox = typeof browser !== 'undefined'
 export const storage: Storage = {
-  set: function (items) {
-    if (chrome.storage) {
-      chrome.storage.local.set(items)
+  set: async function (items) {
+    if (isFirefox) {
+      return await browser.storage.local.set(items)
     } else {
-      browser.storage.local.set(items)
+      return await chrome.storage.local.set(items)
     }
   },
   get: async function (keys) {
-    if (chrome.storage) {
-      return await chrome.storage.local.get(keys)
-    } else {
+    if (isFirefox) {
       return await browser.storage.local.get(keys)
+    } else {
+      return await chrome.storage.local.get(keys)
     }
   },
 }
