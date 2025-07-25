@@ -4,7 +4,9 @@
     "type": "module",
     "scripts": {
         "dev:popup": "cross-env WATCH=true vite build --config vite.config.popup.ts --watch",
-        "dev": "cross-env WATCH=true vite build --watch",
+        "dev:bg": "cross-env WATCH=true vite build --config vite.config.bg.ts --watch",
+        "dev:main": "cross-env WATCH=true vite build --watch",
+        "dev": "npm-run-all --parallel dev:main dev:popup dev:bg",
         "build": "vite build"
     },
     "devDependencies": {
@@ -16,6 +18,7 @@
         "archiver": "^7.0.1",
         "autoprefixer": "^10.4.21",
         "cross-env": "^7.0.3",
+        "npm-run-all": "^4.1.5",
         "postcss": "^8.5.6",
         "prettier": "^3.6.2",
         "prettier-plugin-tailwindcss": "^0.6.14",
@@ -24,6 +27,7 @@
     },
     "dependencies": {
         "marked": "^16.1.1",
+        "openai": "^5.10.2",
         "preact": "^10.26.9"
     }
 }

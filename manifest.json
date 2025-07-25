@@ -12,6 +12,12 @@
         "storage",
         "<all_urls>"
     ],
+    "background": {
+        "scripts": [
+            "dist-bg/index.js"
+        ],
+        "persistent": false
+    },
     "content_scripts": [
         {
             "matches": [

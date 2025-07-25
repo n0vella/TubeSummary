@@ -10,29 +10,43 @@ export function useChat(): [Message[], typeof ask, boolean] {
   const [settings] = useSettings()
 
   useEffect(() => {
-    loadSummary()
-  }, [])
+    async function messageListener(message, sender, sendResponse) {
+      if (sender.id !== chrome.runtime.id) {
+        return
+      }
 
-  function loadModelResponse(messages: Message[]) {
+      if (message.action === 'modelChunk') {
+        setChat((prev) => [
+          ...message.messages,
+          {
+            role: 'assistant',
+            content: message.text,
+          },
+        ])
+      }
+    }
+
+    if (settings) {
+      chrome.runtime.onMessage.addListener(messageListener)
+
+      loadSummary()
+    }
+
+    return () => chrome.runtime.onMessage.removeListener(messageListener)
+  }, [settings])
+
+  async function loadModelResponse(messages: Message[]) {
     setIsresponging(true)
     setChat(messages)
 
-    setChat([
-      {
-        role: 'assistant',
-        content: messages[0].content,
-      },
-    ])
-
-    const body = {
+    await chrome.runtime.sendMessage({
+      action: 'loadModelResponse',
       messages,
-      model: settings.model,
-      stream: true,
-      max_tokens: 2048,
-      temperature: 0.2,
-      top_p: 1,
-      reasoning_format: 'hidden',
+      settings,
     }
+  )
+
+    setIsresponging(false)
   }
 
   async function loadSummary() {

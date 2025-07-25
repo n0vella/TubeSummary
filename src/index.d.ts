@@ -16,7 +16,7 @@ export interface YoutubeApiData {
   }
 }
 
-export type Message = { role: string; content: string }
+export type Message = ChatCompletionMessageParam
 
 export interface Settings {
   prompt: string

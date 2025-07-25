@@ -4,12 +4,14 @@ import { useEffect, useState } from 'preact/hooks'
 import { Settings } from '..'
 
 export default function useSettings(): [Settings, (new_settings: Partial<Settings>) => void] {
-  const [settings, setSettings] = useState<Settings>(defaultSettings)
+  const [settings, setSettings] = useState<Settings | null>(null)
 
   useEffect(() => {
     storage.get('settings').then((loaded_settings) => {
       if (loaded_settings) {
         setSettings(loaded_settings.settings as Settings)
+      } else {
+        setSettings(defaultSettings)
       }
     })
   }, [])

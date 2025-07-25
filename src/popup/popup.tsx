@@ -6,6 +6,8 @@ import useSettings from '../modules/settings'
 function Popup() {
   const [settings, save] = useSettings()
 
+  if (!settings) return <></>
+
   return (
     <form
       onSubmit={(e) => {
