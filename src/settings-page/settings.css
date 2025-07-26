@@ -12,3 +12,7 @@ h1 {
 h2 {
   @apply text-xl;
 }
+
+#settings-root {
+  font-size: 15px;
+}
