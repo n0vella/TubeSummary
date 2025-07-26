@@ -62,7 +62,7 @@ jobs:
       - name: Upload firefox addon
         uses: wdzeng/firefox-addon@v1
         with:
-          addon-guid: '{792c6cee-e45d-4f5b-8584-e4ce5993d3c8}'
+          addon-guid: '{894c58f4-9197-4a7f-a993-602713ed4df3}'
           xpi-path: releases/TubeSummary_${{ github.ref_name  }}.xpi
           self-hosted: false
           jwt-issuer: ${{ secrets.FIREFOX_JWT_ISSUER }}
