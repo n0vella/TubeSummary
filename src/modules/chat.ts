@@ -39,7 +39,7 @@ export function useChat(): [Message[], typeof ask, boolean] {
     setChat([
       {
         role: 'error',
-        content: 'Error: ' + message,
+        content: message,
       },
     ])
     error(message)
@@ -49,12 +49,14 @@ export function useChat(): [Message[], typeof ask, boolean] {
     setIsresponging(true)
     setChat(messages)
 
-    await chrome.runtime.sendMessage({
+    const sucess = await chrome.runtime.sendMessage({
       action: 'loadModelResponse',
       messages,
     })
 
-    setIsresponging(false)
+    if (sucess) {
+      setIsresponging(false)
+    }
   }
 
   async function loadSummary() {
