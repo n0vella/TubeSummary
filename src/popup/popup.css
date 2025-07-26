@@ -2,7 +2,7 @@
 
 input,
 textarea {
-  @apply resize-none rounded-lg border border-gray-300 px-2 py-1 shadow-sm shadow-gray-400 outline-none;
+  @apply resize-none rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm shadow-gray-400 outline-none;
 }
 
 h1 {

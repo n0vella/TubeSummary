@@ -20,6 +20,7 @@ async function* call(messages: Message[], settings: Settings) {
   }
 }
 
+// listen orders from content scripts
 chrome.runtime.onMessage.addListener(function messageListener(message, sender, sendResponse) {
   switch (message.action) {
     case 'loadModelResponse':
@@ -32,4 +33,9 @@ chrome.runtime.onMessage.addListener(function messageListener(message, sender, s
         return true
       })()
   }
+})
+
+// open settigns in a new tab when clicked
+browser.browserAction.onClicked.addListener(() => {
+  browser.tabs.create({ url: browser.runtime.getURL('dist-popup/popup.html') })
 })

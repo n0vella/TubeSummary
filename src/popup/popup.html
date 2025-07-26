@@ -3,10 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Settings</title>
+    <title>TubeSummary - Settings</title>
+    <link rel="icon" type="image/x-icon" href="/icon.png" />
+    <link rel="stylesheet" href="/popup.css" />
   </head>
   <body>
-    <div id="popup-root"></div>
-    <script type="module" src="./popup.tsx"></script>
+    <div id="settings-root" class="flex h-screen w-full flex-col gap-2 bg-stone-100 p-4">
+      <h1>Settings</h1>
+      <form id="settings-form" class="flex w-[800px] flex-col gap-10 overflow-y-auto">
+        <div class="flex flex-col gap-5">
+          <h2>AI prompt</h2>
+
+          <div class="pl-4">
+            <textarea name="prompt" class="flex h-full min-h-32 w-full"></textarea>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-5">
+          <h2>API settings</h2>
+          <div class="flex w-5/6 flex-col gap-3 pb-5 pl-4">
+            <label class="flex justify-between">
+              <span class="text-nowrap">Endpoint:</span>
+              <input name="endpoint" id="username" class="user-input w-3/4" />
+            </label>
+            <label class="flex justify-between">
+              <span class="text-nowrap">API Key:</span>
+              <input name="apiKey" type="password" id="password" class="user-input w-3/4" />
+            </label>
+            <label class="flex justify-between">
+              <span class="text-nowrap">Model:</span>
+              <input name="model" class="user-input w-3/4" />
+            </label>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-1">
+          <button id="save-button" class="flex h-10 cursor-pointer items-center gap-1 rounded-lg bg-green-500 p-1 text-white hover:brightness-110">
+            <span>SAVE</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" class="h-10">
+              <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+              <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+              <path d="M14 4l0 4l-6 0l0 -4" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script src="popup.js" type="module"></script>
   </body>
 </html>
