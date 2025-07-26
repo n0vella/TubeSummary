@@ -13,14 +13,18 @@ export function useChat(): [Message[], typeof ask, boolean] {
         return
       }
 
-      if (message.action === 'modelChunk') {
-        setChat((prev) => [
-          ...message.messages,
-          {
-            role: 'assistant',
-            content: message.text,
-          },
-        ])
+      switch (message.action) {
+        case 'modelchunk':
+          setChat((prev) => [
+            ...message.messages,
+            {
+              role: 'assistant',
+              content: message.text,
+            },
+          ])
+        case 'error':
+          setError(message.errorText)
+          return
       }
     }
     chrome.runtime.onMessage.addListener(messageListener)
@@ -29,6 +33,16 @@ export function useChat(): [Message[], typeof ask, boolean] {
 
     return () => chrome.runtime.onMessage.removeListener(messageListener)
   }, [])
+
+  function setError(message: string) {
+    setChat([
+      {
+        role: 'error',
+        content: 'Error: ' + message,
+      },
+    ])
+    error(message)
+  }
 
   async function loadModelResponse(messages: Message[]) {
     setIsresponging(true)
@@ -47,13 +61,7 @@ export function useChat(): [Message[], typeof ask, boolean] {
     const settings = await readSettings()
 
     if (!settings.prompt.includes('{transcription}')) {
-      error('Prompt must contain "{transcription}" flag')
-      setChat([
-        {
-          role: 'assistant',
-          content: 'Prompt must contain "{transcription}" flag',
-        },
-      ])
+      setError('Prompt must contain "{transcription}" flag')
       return
     }
 

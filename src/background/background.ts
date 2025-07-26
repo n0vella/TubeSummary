@@ -23,6 +23,10 @@ async function* call(messages: Message[], settings: Settings) {
 
 // listen orders from content scripts
 chrome.runtime.onMessage.addListener(async function messageListener(message, sender, sendResponse) {
+  async function error(msg: string) {
+    await chrome.tabs.sendMessage(sender.tab.id, { action: 'error', errorText: msg })
+  }
+
   const settings = await readSettings()
 
   switch (message.action) {
