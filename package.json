@@ -7,7 +7,7 @@
         "dev:bg": "cross-env WATCH=true vite build --config vite.config.bg.ts --watch",
         "dev:main": "cross-env WATCH=true vite build --watch",
         "dev": "npm-run-all --parallel dev:main dev:settings dev:bg",
-        "build": "vite build"
+        "build": "vite build && vite build --config vite.config.settings.ts && vite build --config vite.config.bg.ts"
     },
     "devDependencies": {
         "@preact/preset-vite": "^2.10.2",
