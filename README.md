@@ -56,7 +56,7 @@ If you like this extension you can contribute buying me a cofee or whatever you 
         <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"
         >
     </a>
-    <a href="https://www.paypal.com/paypalme/adriannovella" target="_blank" rel="noopener">
+    <a href="https://www.paypal.com/paypalme/n0velladev" target="_blank" rel="noopener">
         <img src="https://www.paypalobjects.com/webstatic/icon/pp196.png" alt="Paypal" width="60" height="60" style="border-radius: 10px" />
     </a>
 </div>

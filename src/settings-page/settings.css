@@ -16,3 +16,25 @@ h2 {
 #settings-root {
   font-size: 15px;
 }
+
+.buymeacoffee {
+  transform: translate(-120%);
+  animation:
+    buymeacoffee-load 0.8s ease-out 1s 1 forwards,
+    buymeacoffee-brightness 3s infinite;
+}
+
+@keyframes buymeacoffee-load {
+  80% {
+    transform: translate(30%);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes buymeacoffee-brightness {
+  50% {
+    filter: brightness(1.2);
+  }
+}
