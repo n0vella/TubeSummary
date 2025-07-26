@@ -1,6 +1,5 @@
 node_modules
 .env
 dist
-dist-settings
-dist-bg
+build
 releases

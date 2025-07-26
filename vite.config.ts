@@ -49,7 +49,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       target: 'esnext',
       minify: !isDevelopment,
       sourcemap: isDevelopment ? 'inline' : false,
-      outDir: 'dist',
+      outDir: 'dist/content-script',
       lib: {
         entry: 'src/main.tsx',
         name: 'index',

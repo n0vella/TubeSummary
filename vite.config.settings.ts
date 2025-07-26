@@ -14,7 +14,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       target: 'esnext',
       minify: !isDevelopment,
       sourcemap: isDevelopment ? 'inline' : false,
-      outDir: resolve(__dirname, 'dist-settings'),
+      outDir: resolve(__dirname, 'dist/settings'),
       emptyOutDir: true,
       rollupOptions: {
         input: resolve(__dirname, 'src/settings-page/settings.html'),

@@ -21,7 +21,7 @@ async function* call(messages: Message[], settings: Settings) {
   }
 }
 
-const openSettings = () => chrome.tabs.create({ url: chrome.runtime.getURL('dist-settings/settings.html') })
+const openSettings = () => chrome.tabs.create({ url: chrome.runtime.getURL('dist/settings/settings.html') })
 
 // listen orders from content scripts
 chrome.runtime.onMessage.addListener(async function messageListener(message, sender, sendResponse) {

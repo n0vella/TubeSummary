@@ -18,7 +18,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
           compact: !isDevelopment,
         },
       },
-      outDir: 'dist-bg',
+      outDir: 'dist/bg',
       emptyOutDir: false,
     },
   }
