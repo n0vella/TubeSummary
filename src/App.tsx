@@ -99,7 +99,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative">
+    <div id="TubeSummary" className="relative">
       <button
         title={'TubeSummary - ' + (dialogLoaded ? 'Close summary' : 'Generate summary') + '\nMiddle click to open settings'}
         className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full p-2"
