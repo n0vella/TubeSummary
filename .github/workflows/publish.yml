@@ -1,0 +1,69 @@
+name: Create Release and Upload XPI
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: v${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload XPI to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: releases/TubeSummary_${{ github.ref_name  }}.xpi
+          asset_name: TubeSummary_${{ github.ref_name }}.xpi
+          asset_content_type: application/zip
+
+      - name: Upload same file as zip (chrome)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: releases/TubeSummary_${{ github.ref_name  }}.xpi
+          asset_name: TubeSummary_${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload firefox addon
+        uses: wdzeng/firefox-addon@v1
+        with:
+          addon-guid: '{792c6cee-e45d-4f5b-8584-e4ce5993d3c8}'
+          xpi-path: releases/TubeSummary_${{ github.ref_name  }}.xpi
+          self-hosted: false
+          jwt-issuer: ${{ secrets.FIREFOX_JWT_ISSUER }}
+          jwt-secret: ${{ secrets.FIREFOX_JWT_SECRET }}
