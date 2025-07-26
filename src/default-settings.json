@@ -1,5 +1,5 @@
 {
-    "prompt": "Summarize the key ideas from the video in a way that they could be included in the script as a final summary section.\n---\n{transcription}",
+    "prompt": "Summarize the following video based on its transcription.\nReturn only the summary.\nWrite it in the same tone as the video, as if the author had adapted it to be much shorter.\nAvoid using the third person.\n> If you find a memorable quote, use it in markdown quote format into a new line.\n---\n{transcription}",
     "endpoint": "",
     "model": "",
     "apiKey": ""
