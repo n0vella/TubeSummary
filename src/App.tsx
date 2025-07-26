@@ -3,6 +3,7 @@ import { useChat } from './modules/chat'
 import { marked } from 'marked'
 import { brain, closeIcon, send } from './Icons'
 import { createRoot } from 'preact/compat/client'
+import { openSettingsPage } from './utils'
 
 function SummaryPanel() {
   const [chat, ask, isResponding] = useChat()
@@ -106,7 +107,7 @@ export default function App() {
         onMouseDown={(e: MouseEvent) => {
           if (e.button === 1) {
             e.preventDefault()
-            chrome.runtime.sendMessage({ action: 'openSettings' })
+            openSettingsPage()
           } else {
             dialogLoaded ? closeDialog() : loadDialog()
           }

@@ -26,6 +26,8 @@ export async function readSettings(): Promise<Settings> {
   return (await storage.get('settings')).settings ?? defaultSettings
 }
 
+export const openSettingsPage = () => chrome.runtime.sendMessage({ action: 'openSettings' })
+
 export function log(message: any, ...optionalParams: any[]) {
   myConsole.log(`%c${pkg.name}:`, 'color: orange; font-weight: bold', message, ...optionalParams)
 }

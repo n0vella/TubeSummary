@@ -1,6 +1,6 @@
 import { Message, Settings } from '..'
 import { getTranscript } from './youtube'
-import { error, readSettings, storage } from '../utils'
+import { error, openSettingsPage, readSettings, storage } from '../utils'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 export function useChat(): [Message[], typeof ask, boolean] {
@@ -61,6 +61,12 @@ export function useChat(): [Message[], typeof ask, boolean] {
   async function loadSummary() {
     const transcript = (await getTranscript()) ?? ''
     const settings = await readSettings()
+
+    if (!settings.apiKey) {
+      setError('You must configure a provider first')
+      openSettingsPage()
+      return
+    }
 
     if (!settings.prompt.includes('{transcription}')) {
       setError('Prompt must contain "{transcription}" flag')
