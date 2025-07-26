@@ -21,7 +21,7 @@ async function* call(messages: Message[], settings: Settings) {
   }
 }
 
-const openSettings = () => browser.tabs.create({ url: browser.runtime.getURL('dist-settings/settings.html') })
+const openSettings = () => chrome.tabs.create({ url: chrome.runtime.getURL('dist-settings/settings.html') })
 
 // listen orders from content scripts
 chrome.runtime.onMessage.addListener(async function messageListener(message, sender, sendResponse) {
@@ -41,6 +41,7 @@ chrome.runtime.onMessage.addListener(async function messageListener(message, sen
       return false
     }
 
+    await chrome.tabs.sendMessage(sender.tab.id, { action: 'modelEnd' })
     return true
   }
 
@@ -55,4 +56,4 @@ chrome.runtime.onMessage.addListener(async function messageListener(message, sen
 })
 
 // open settigns in a new tab when clicked extension button
-browser.browserAction.onClicked.addListener(openSettings)
+chrome.action.onClicked.addListener(openSettings)

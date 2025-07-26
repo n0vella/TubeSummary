@@ -1,5 +1,5 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "TubeSummary",
     "version": "0.1.0",
     "description": "Summarizes videos and helps with your questions",
@@ -8,15 +8,18 @@
         "512": "icon.png"
     },
     "permissions": [
+        "tabs",
         "activeTab",
-        "storage",
+        "storage"
+    ],
+    "host_permissions": [
         "<all_urls>"
     ],
     "background": {
+        "service_worker": "dist-bg/index.js",
         "scripts": [
             "dist-bg/index.js"
-        ],
-        "persistent": false
+        ]
     },
     "content_scripts": [
         {
@@ -35,10 +38,10 @@
     ],
     "browser_specific_settings": {
         "gecko": {
-            "id": "{792c6cee-e45d-4f5b-8584-e4ce5993d3c8}"
+            "id": "{894c58f4-9197-4a7f-a993-602713ed4df3}"
         }
     },
-    "browser_action": {
+    "action": {
         "default_title": "TubeSummary"
     }
 }

@@ -26,6 +26,9 @@ export function useChat(): [Message[], typeof ask, boolean] {
         case 'error':
           setError(message.errorText)
           return
+        case 'modelEnd':
+          setIsresponging(false)
+          return
       }
     }
     chrome.runtime.onMessage.addListener(messageListener)
@@ -49,14 +52,10 @@ export function useChat(): [Message[], typeof ask, boolean] {
     setIsresponging(true)
     setChat(messages)
 
-    const sucess = await chrome.runtime.sendMessage({
+    await chrome.runtime.sendMessage({
       action: 'loadModelResponse',
       messages,
     })
-
-    if (sucess) {
-      setIsresponging(false)
-    }
   }
 
   async function loadSummary() {
