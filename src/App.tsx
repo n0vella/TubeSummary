@@ -46,7 +46,7 @@ function SummaryPanel() {
 
       <form
         id="chat-box"
-        className="!mx-4 flex w-full"
+        className="!mx-4 flex w-full gap-2"
         hidden={isResponding}
         onSubmit={submit}
         onKeyDown={(e) => {
