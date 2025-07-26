@@ -14,14 +14,15 @@ export function useChat(): [Message[], typeof ask, boolean] {
       }
 
       switch (message.action) {
-        case 'modelchunk':
-          setChat((prev) => [
+        case 'modelChunk':
+          setChat([
             ...message.messages,
             {
               role: 'assistant',
               content: message.text,
             },
           ])
+          return
         case 'error':
           setError(message.errorText)
           return

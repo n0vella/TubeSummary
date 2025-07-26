@@ -33,12 +33,16 @@ chrome.runtime.onMessage.addListener(async function messageListener(message, sen
     case 'loadModelResponse':
       ;(async () => {
         let text = ''
-        for await (const chunk of call(message.messages, settings)) {
-          text += chunk
-          await chrome.tabs.sendMessage(sender.tab.id, { action: 'modelChunk', messages: message.messages, text })
+        try {
+          for await (const chunk of call(message.messages, settings)) {
+            text += chunk
+            await chrome.tabs.sendMessage(sender.tab.id, { action: 'modelChunk', messages: message.messages, text })
+          }
+        } catch (e) {
+          await error(e.message || String(e))
         }
-        return true
       })()
+      return true
   }
 })
 
