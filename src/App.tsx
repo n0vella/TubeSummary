@@ -1,4 +1,4 @@
-import { useState, useRef } from 'preact/hooks'
+import { useState, useRef, useEffect } from 'preact/hooks'
 import { useChat } from './modules/chat'
 import { marked } from 'marked'
 import { brain, closeIcon, send } from './Icons'
@@ -82,6 +82,12 @@ export default function App() {
     setDialogLoaded(false)
     root.current?.unmount()
   }
+
+  useEffect(() => {
+    window.addEventListener('yt-navigate-finish', closeDialog)
+
+    return () => window.removeEventListener('yt-navigate-finish', closeDialog)
+  }, [])
 
   function loadDialog() {
     setDialogLoaded(true)
