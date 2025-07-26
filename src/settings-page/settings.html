@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TubeSummary - Settings</title>
     <link rel="icon" type="image/x-icon" href="/icon.png" />
-    <link rel="stylesheet" href="/popup.css" />
+    <link rel="stylesheet" href="/settings.css" />
   </head>
   <body>
     <div id="settings-root" class="flex h-screen w-full flex-col gap-2 bg-stone-100 p-4">
-      <h1>Settings</h1>
+      <div class="flex items-center gap-1">
+        <img class="h-6" src="../../icon.png" />
+        <h1>Settings</h1>
+      </div>
+
       <form id="settings-form" class="flex w-[800px] flex-col gap-10 overflow-y-auto">
         <div class="flex flex-col gap-5">
           <h2>AI prompt</h2>
@@ -38,7 +42,7 @@
         </div>
 
         <div class="flex justify-end gap-1">
-          <button id="save-button" class="flex h-10 cursor-pointer items-center gap-1 rounded-lg bg-green-500 p-1 text-white hover:brightness-110">
+          <button id="save-button" class="flex h-10 items-center gap-1 rounded-lg bg-red-500 p-1 text-white transition-colors enabled:cursor-pointer enabled:hover:text-black disabled:opacity-85">
             <span>SAVE</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" class="h-10">
               <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
@@ -50,6 +54,6 @@
       </form>
     </div>
 
-    <script src="popup.js" type="module"></script>
+    <script src="settings.js" type="module"></script>
   </body>
 </html>

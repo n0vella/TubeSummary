@@ -8,16 +8,16 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
 
   return {
     plugins: [tailwindcss(), preact()],
-    root: './src/popup',
+    root: './src/settings-page',
     base: './',
     build: {
       target: 'esnext',
       minify: !isDevelopment,
       sourcemap: isDevelopment ? 'inline' : false,
-      outDir: resolve(__dirname, 'dist-popup'),
+      outDir: resolve(__dirname, 'dist-settings'),
       emptyOutDir: true,
       rollupOptions: {
-        input: resolve(__dirname, 'src/popup/popup.html'),
+        input: resolve(__dirname, 'src/settings-page/settings.html'),
         output: {
           compact: !isDevelopment,
         },

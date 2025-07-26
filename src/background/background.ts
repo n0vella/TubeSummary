@@ -37,5 +37,5 @@ chrome.runtime.onMessage.addListener(function messageListener(message, sender, s
 
 // open settigns in a new tab when clicked
 browser.browserAction.onClicked.addListener(() => {
-  browser.tabs.create({ url: browser.runtime.getURL('dist-popup/popup.html') })
+  browser.tabs.create({ url: browser.runtime.getURL('dist-settings/settings.html') })
 })
