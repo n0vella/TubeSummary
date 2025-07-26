@@ -100,7 +100,18 @@ export default function App() {
 
   return (
     <div className="relative">
-      <button title={dialogLoaded ? 'Close summary' : 'Generate summary'} className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full p-2" onClick={dialogLoaded ? closeDialog : loadDialog}>
+      <button
+        title={'TubeSummary - ' + (dialogLoaded ? 'Close summary' : 'Generate summary') + '\nMiddle click to open settings'}
+        className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full p-2"
+        onMouseDown={(e: MouseEvent) => {
+          if (e.button === 1) {
+            e.preventDefault()
+            chrome.runtime.sendMessage({ action: 'openSettings' })
+          } else {
+            dialogLoaded ? closeDialog() : loadDialog()
+          }
+        }}
+      >
         {dialogLoaded ? closeIcon : brain}
       </button>
     </div>
