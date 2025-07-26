@@ -1,5 +1,6 @@
-import { CSS_Selector, Storage } from '.'
+import { CSS_Selector, Settings, Storage } from '.'
 import pkg from '../package.json'
+import defaultSettings from './default-settings.json'
 
 const myConsole = console // save original console, just in case site overwrites handy methods such as log
 
@@ -19,6 +20,10 @@ export const storage: Storage = {
       return await chrome.storage.local.get(keys)
     }
   },
+}
+
+export async function readSettings(): Promise<Settings> {
+  return (await storage.get('settings')).settings ?? defaultSettings
 }
 
 export function log(message: any, ...optionalParams: any[]) {

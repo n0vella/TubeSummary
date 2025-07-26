@@ -1,13 +1,11 @@
-import { Message } from '..'
+import { Message, Settings } from '..'
 import { getTranscript } from './youtube'
-import { error } from '../utils'
+import { error, readSettings, storage } from '../utils'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import useSettings from './settings'
 
 export function useChat(): [Message[], typeof ask, boolean] {
   const [chat, setChat] = useState<Message[]>([])
   const [isResponding, setIsresponging] = useState(true)
-  const [settings] = useSettings()
 
   useEffect(() => {
     async function messageListener(message, sender, sendResponse) {
@@ -25,15 +23,12 @@ export function useChat(): [Message[], typeof ask, boolean] {
         ])
       }
     }
+    chrome.runtime.onMessage.addListener(messageListener)
 
-    if (settings) {
-      chrome.runtime.onMessage.addListener(messageListener)
-
-      loadSummary()
-    }
+    loadSummary()
 
     return () => chrome.runtime.onMessage.removeListener(messageListener)
-  }, [settings])
+  }, [])
 
   async function loadModelResponse(messages: Message[]) {
     setIsresponging(true)
@@ -42,15 +37,14 @@ export function useChat(): [Message[], typeof ask, boolean] {
     await chrome.runtime.sendMessage({
       action: 'loadModelResponse',
       messages,
-      settings,
-    }
-  )
+    })
 
     setIsresponging(false)
   }
 
   async function loadSummary() {
     const transcript = (await getTranscript()) ?? ''
+    const settings = await readSettings()
 
     if (!settings.prompt.includes('{transcription}')) {
       error('Prompt must contain "{transcription}" flag')

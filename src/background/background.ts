@@ -1,5 +1,6 @@
 import OpenAI from 'openai'
 import { Message, Settings } from '..'
+import { readSettings, storage } from '../utils'
 
 async function* call(messages: Message[], settings: Settings) {
   const client = new OpenAI({
@@ -21,12 +22,14 @@ async function* call(messages: Message[], settings: Settings) {
 }
 
 // listen orders from content scripts
-chrome.runtime.onMessage.addListener(function messageListener(message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function messageListener(message, sender, sendResponse) {
+  const settings = await readSettings()
+
   switch (message.action) {
     case 'loadModelResponse':
       ;(async () => {
         let text = ''
-        for await (const chunk of call(message.messages, message.settings)) {
+        for await (const chunk of call(message.messages, settings)) {
           text += chunk
           await chrome.tabs.sendMessage(sender.tab.id, { action: 'modelChunk', messages: message.messages, text })
         }
