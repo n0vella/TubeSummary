@@ -8,47 +8,81 @@
 Browser extension to boost YouTube with AI-Powered summaries.
 
 # How it works?
+
+
 Check out the new brain button at the end of your toolbar, this will trigger summarization.
-![1](assets/readme/1.png)
+- ![1](assets/readme/1.png)
 
 Below the video, summary will be generated, you can even ask the AI about the video.
 
-![2](assets/readme/2.png)
+- ![2](assets/readme/2.png)
+
+Clicking on the extension icon or middle-clikcing on the summarize button will open settings page in a new tab.
+Here you can customize the prompt and introduce your API provider credentials.
+
+- ![3](assets/readme/3.png)
+
 
 # API providers
+
 To archieve this is mandatory to setup a OpenAI compatible API provider, you can use a paid one if you are subscribed or you can check this [list of free LLM resources](https://github.com/cheahjs/free-llm-api-resources)
 
 ## Tested services
+
 This is a list of providers that have been tested with this extension, all of them have a free tier.
 
 ### Openrouter
+
 - Endpoint url: `https://openrouter.ai/api/v1/`
 - Docs: `https://openrouter.ai/docs/api-reference/overview`
 
 ### Cerebras
+
 - Endpoint url: `https://api.cerebras.ai/v1/`
 - Docs: `https://inference-docs.cerebras.ai/introduction`
 
 ### Groq
+
 - Endpoint url: `https://api.groq.com/openai/v1`
 - Docs: `https://console.groq.com/docs/api-reference`
 
 ### Together AI
+
 - Endpoint url: `https://api.together.xyz/v1/`
 - Docs: `https://api.together.ai/models`
 
 ### Groq
+
 - Endpoint url: `https://api.groq.com/openai/v1`
 - Docs: `https://github.com/marketplace/models`
 
 ### Gemini (Doesn't work yet!)
+
 Looks like google openai implementation is still on beta and it didn't work yet
+
 - Endpoint url: `https://generativelanguage.googleapis.com/v1beta/openai/`
 - Docs: `https://ai.google.dev/gemini-api/docs/openai`
+
+# How to Install extension
+
+## Firefox
+
+Just install it from firefox addons page
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/tubesummary/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get TubeSummary for Firefox"></a>
+
+## Chrome
+
+1. Go to [latest release](https://github.com/n0vella/TubeSummary/releases/latest)
+2. Download zip and unpack it
+3. Go to [chrome://extensions](chrome://extensions/)
+4. Turn developer mode on
+5. Install unpacked extension, just select the unpacked folder
 
 # Contributing
 
 ## Donations
+
 If you like this extension you can contribute buying me a cofee or whatever you want, that would be really great :)
 
 <div style="display: inline-flex; gap: 10px; align-items: center">
@@ -62,4 +96,5 @@ If you like this extension you can contribute buying me a cofee or whatever you 
 </div>
 
 ## PR
+
 Of course PRs are welcome, this extension uses a basic typescript + vite + preact + tailwind stack. Ask me if you have any questions.
