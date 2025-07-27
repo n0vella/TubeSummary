@@ -9,8 +9,8 @@ Browser extension to boost YouTube with AI-Powered summaries.
 
 # How it works?
 
-
 Check out the new brain button at the end of your toolbar, this will trigger summarization.
+
 - ![1](assets/readme/1.png)
 
 Below the video, summary will be generated, you can even ask the AI about the video.
@@ -21,7 +21,6 @@ Clicking on the extension icon or middle-clikcing on the summarize button will o
 Here you can customize the prompt and introduce your API provider credentials.
 
 - ![3](assets/readme/3.png)
-
 
 # API providers
 
@@ -51,9 +50,9 @@ This is a list of providers that have been tested with this extension, all of th
 - Endpoint url: `https://api.together.xyz/v1/`
 - Docs: `https://api.together.ai/models`
 
-### Groq
+### Github
 
-- Endpoint url: `https://api.groq.com/openai/v1`
+- Endpoint url: `https://models.github.ai/inference`
 - Docs: `https://github.com/marketplace/models`
 
 ### Gemini (Doesn't work yet!)
