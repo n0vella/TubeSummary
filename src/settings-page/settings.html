@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/settings.css" />
   </head>
   <body>
-    <div id="header" class="flex h-12 w-full items-center justify-between bg-stone-100 px-3 py-1">
+    <div id="header" class="flex h-12 w-full items-center justify-between bg-stone-100 px-3">
       <div id="donate" class="buymeacoffee flex h-10 animate-[fadeIn_1s_ease-in_forwards] gap-2">
         <a href="https://www.buymeacoffee.com/n0vella" target="_blank">
           <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" class="h-10 cursor-pointer transition-transform hover:scale-110" />
@@ -29,7 +29,8 @@
         </div>
       </a>
     </div>
-    <div id="settings-root" class="flex h-screen w-full flex-col gap-2 bg-stone-100 p-4">
+
+    <div id="settings-root" class="flex h-screen w-full flex-col gap-2 bg-stone-50 p-4">
       <form id="settings-form" class="flex w-[800px] flex-col gap-10 overflow-y-auto">
         <div class="flex flex-col gap-5">
           <h2>AI prompt</h2>
@@ -37,7 +38,7 @@
           <div class="pl-4">
             <textarea name="prompt" class="flex h-full min-h-56 w-full"></textarea>
           </div>
-          <span id="reset-default-prompt" class="cursor-pointer">⟲ Reset default promt</span>
+          <span id="reset-default-prompt" class="cursor-pointer hover:font-semibold">⟲ Reset default promt</span>
         </div>
 
         <div class="flex flex-col gap-5">
@@ -59,8 +60,8 @@
         </div>
 
         <div class="flex justify-end gap-1">
-          <button id="save-button" class="flex h-10 items-center gap-1 rounded-lg bg-red-500 p-1 text-white transition-colors enabled:cursor-pointer enabled:hover:text-black disabled:opacity-85">
-            <span>SAVE</span>
+          <button id="save-button" class="flex h-10 items-center gap-1 rounded-lg border-2 border-red-600 bg-red-600 p-1 px-2 text-white enabled:cursor-pointer enabled:hover:text-black disabled:opacity-80">
+            <span class="text-lg font-medium">SAVE</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" class="h-10">
               <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
               <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
