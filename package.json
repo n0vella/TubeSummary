@@ -1,6 +1,6 @@
 {
     "name": "tube-summary",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "module",
     "scripts": {
         "dev:settings": "cross-env WATCH=true vite build --config vite.config.settings.ts --watch",
