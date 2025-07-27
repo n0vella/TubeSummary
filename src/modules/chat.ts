@@ -59,7 +59,15 @@ export function useChat(): [Message[], typeof ask, boolean] {
   }
 
   async function loadSummary() {
-    const transcript = (await getTranscript()) ?? ''
+    let transcript = ''
+
+    try {
+      transcript = await getTranscript()
+    } catch {
+      setError('Trouble fetching transcription. Try waiting for the page to load completely.')
+      return
+    }
+
     const settings = await readSettings()
 
     if (!settings.apiKey) {
