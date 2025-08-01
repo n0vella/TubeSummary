@@ -2,13 +2,14 @@ import { readSettings, storage } from '../utils'
 import { SettingsForm } from '.'
 import { Settings } from '..'
 import defaultSettings from '../default-settings.json'
+import { Model } from 'openai/resources/models'
 
 const form = document.querySelector<SettingsForm>('#settings-form')
 const button = document.querySelector<HTMLButtonElement>('#save-button')
 const resetDefaultPromptButton = document.querySelector<HTMLSpanElement>('#reset-default-prompt')
 
 let settings: Settings
-// let models: Model
+const modelDetails = {}
 
 async function loadSettings() {
   settings = await readSettings()
@@ -26,7 +27,7 @@ async function loadAvailableModels() {
 
   datalist.innerHTML = ''
 
-  const models = await chrome.runtime.sendMessage({
+  const models: (Model & { [key: string]: string })[] = await chrome.runtime.sendMessage({
     action: 'listModels',
     endpoint,
     apiKey,
@@ -36,7 +37,19 @@ async function loadAvailableModels() {
     const option = document.createElement('option')
     option.value = model.id
     datalist.appendChild(option)
+
+    modelDetails[model.id] = Object.entries(model).filter(([key]) => key != 'id')
   }
+}
+
+function showModelDetails() {
+  const model = document.querySelector<HTMLInputElement>('input[name="model"]').value
+
+  const modelDetailsSection = document.getElementById('model-details-section')
+  modelDetailsSection.hidden = !modelDetails[model]
+
+  const modelDetailsDiv = document.getElementById('model-details')
+  modelDetailsDiv.innerHTML = modelDetails[model].map(([key, value]) => `<span><b>${key}</b>: <i>${value}</i><span>`).join('<br>')
 }
 
 async function onSubmit(e: SubmitEvent) {
@@ -82,4 +95,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const modelsInput = document.querySelector<HTMLInputElement>('input[name="model"]')
 
   modelsInput.addEventListener('focus', loadAvailableModels)
+  modelsInput.addEventListener('blur', showModelDetails)
+
+  await loadAvailableModels()
+  showModelDetails()
 })

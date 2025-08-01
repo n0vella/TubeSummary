@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 
-input,
-textarea {
+.user-input {
   @apply resize-none rounded-lg border border-stone-300 bg-white px-2 py-1 shadow-sm shadow-stone-400 outline-none;
 }
 
