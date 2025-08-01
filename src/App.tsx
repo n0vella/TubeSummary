@@ -27,7 +27,7 @@ function SummaryPanel() {
 
   return (
     <div id="yt-summary-panel" className={`description-like !mt-8 flex w-full flex-col gap-10 ${chat.length > 0 && chat[0].role == 'error' ? (document.documentElement.hasAttribute('dark') ? '!bg-red-800' : '!bg-red-200') : ''}`}>
-      {chat.length <= 1 && <div className="flex !h-24 animate-pulse justify-center">{brain}</div>}
+      {chat.length <= 1 && chat[0]?.role !== 'error' && <div className="flex !h-24 animate-pulse justify-center">{brain}</div>}
       {chat.map(({ role, content }) => {
         switch (role) {
           case 'assistant':
