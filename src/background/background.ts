@@ -34,13 +34,14 @@ async function listModels(endpoint: string, apiKey: string) {
 const openSettings = () => chrome.tabs.create({ url: chrome.runtime.getURL('dist/settings/settings.html') })
 
 // listen orders from content scripts
-chrome.runtime.onMessage.addListener(async function messageListener(message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function messageListener(message, sender, sendResponse) {
   async function error(msg: string) {
     await chrome.tabs.sendMessage(sender.tab.id, { action: 'error', errorText: msg })
   }
 
   async function sendChunks() {
     let text = ''
+    const settings = await readSettings()
     try {
       for await (const chunk of call(message.messages, settings)) {
         text += chunk
@@ -55,15 +56,17 @@ chrome.runtime.onMessage.addListener(async function messageListener(message, sen
     return true
   }
 
-  const settings = await readSettings()
-
   switch (message.action) {
     case 'loadModelResponse':
-      return await sendChunks()
+      sendChunks().then((r) => sendResponse(r))
+      return true
     case 'openSettings':
-      return openSettings()
+      openSettings()
+      sendResponse()
+      return true
     case 'listModels':
-      return await listModels(message.endpoint, message.apiKey)
+      listModels(message.endpoint, message.apiKey).then((models) => sendResponse(models))
+      return true
   }
 })
 

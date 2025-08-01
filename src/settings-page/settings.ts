@@ -33,6 +33,10 @@ async function loadAvailableModels() {
     apiKey,
   })
 
+  if (!models) {
+    return
+  }
+
   for (const model of models) {
     const option = document.createElement('option')
     option.value = model.id
