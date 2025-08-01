@@ -1,16 +1,16 @@
 @import 'tailwindcss';
 
 .description-like {
-  background-color: var(--yt-spec-badge-chip-background) !important;
-  font-family: 'Roboto', 'Arial', sans-serif !important;
-  font-size: 1.4rem !important;
-  padding: 12px !important;
-  border-radius: 12px !important;
-  color: var(--yt-spec-text-primary) !important;
+  background-color: var(--yt-spec-badge-chip-background);
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-size: 1.4rem;
+  padding: 12px;
+  border-radius: 12px;
+  color: var(--yt-spec-text-primary);
 }
 
 #chat-box {
-  padding: 5px 10px !important;
+  padding: 5px 10px;
 }
 
 .user-input {
@@ -80,5 +80,5 @@ div:has(#yt-summary-panel) {
 }
 
 button {
-  cursor: pointer !important;
+  cursor: pointer;
 }
