@@ -22,13 +22,18 @@ Here you can customize the prompt and introduce your API provider credentials.
 
 - ![3](assets/readme/3.png)
 
+After introducing credentials, if your provider supports it, you should see available models as model input options, also some extra model details will be shown.
+
 # API providers
 
 To archieve this is mandatory to setup a OpenAI compatible API provider, you can use a paid one if you are subscribed or you can check this [list of free LLM resources](https://github.com/cheahjs/free-llm-api-resources)
 
 ## Tested services
 
+This extension is still in beta. It has been tested on the latest versions of Firefox and Chrome. It should work on other browsers as well, but I can't guarantee this.
+
 This is a list of providers that have been tested with this extension, all of them have a free tier.
+It should work with any openai compatible provider anyways.
 
 ### Openrouter
 
