@@ -8,6 +8,7 @@ const button = document.querySelector<HTMLButtonElement>('#save-button')
 const resetDefaultPromptButton = document.querySelector<HTMLSpanElement>('#reset-default-prompt')
 
 let settings: Settings
+// let models: Model
 
 async function loadSettings() {
   settings = await readSettings()
@@ -16,6 +17,26 @@ async function loadSettings() {
   form.endpoint.value = settings.endpoint
   form.model.value = settings.model
   form.apiKey.value = settings.apiKey
+}
+
+async function loadAvailableModels() {
+  const datalist = document.getElementById('models')
+  const endpoint = document.querySelector<HTMLInputElement>('input[name="endpoint"]').value
+  const apiKey = document.querySelector<HTMLInputElement>('input[name="apiKey"]').value
+
+  datalist.innerHTML = ''
+
+  const models = await chrome.runtime.sendMessage({
+    action: 'listModels',
+    endpoint,
+    apiKey,
+  })
+
+  for (const model of models) {
+    const option = document.createElement('option')
+    option.value = model.id
+    datalist.appendChild(option)
+  }
 }
 
 async function onSubmit(e: SubmitEvent) {
@@ -35,6 +56,11 @@ async function onSubmit(e: SubmitEvent) {
 }
 
 function onInput() {
+  if (!settings) {
+    button.disabled = true
+    return
+  }
+
   button.disabled = form.prompt.value === settings.prompt && form.endpoint.value === settings.endpoint && form.model.value === settings.model && form.apiKey.value === settings.apiKey
 }
 
@@ -42,7 +68,7 @@ function resetDefaultPrompt() {
   form.prompt.value = defaultSettings.prompt
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   form.oninput = onInput
   form.onsubmit = onSubmit
   button.disabled = true
@@ -51,5 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
     onInput()
   }
 
-  loadSettings()
+  await loadSettings()
+
+  const modelsInput = document.querySelector<HTMLInputElement>('input[name="model"]')
+
+  modelsInput.addEventListener('focus', loadAvailableModels)
 })

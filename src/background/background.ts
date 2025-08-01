@@ -21,6 +21,16 @@ async function* call(messages: Message[], settings: Settings) {
   }
 }
 
+async function listModels(endpoint: string, apiKey: string) {
+  const client = new OpenAI({
+    baseURL: endpoint,
+    apiKey,
+    dangerouslyAllowBrowser: true,
+  })
+
+  return (await client.models.list()).data
+}
+
 const openSettings = () => chrome.tabs.create({ url: chrome.runtime.getURL('dist/settings/settings.html') })
 
 // listen orders from content scripts
@@ -52,6 +62,8 @@ chrome.runtime.onMessage.addListener(async function messageListener(message, sen
       return await sendChunks()
     case 'openSettings':
       return openSettings()
+    case 'listModels':
+      return await listModels(message.endpoint, message.apiKey)
   }
 })
 
