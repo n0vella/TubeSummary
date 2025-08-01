@@ -10,16 +10,33 @@
 }
 
 #chat-box {
-  padding: 0 20px !important;
+  padding: 5px 10px !important;
 }
 
 .user-input {
-  outline: none;
-  border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
+  border-radius: 20px;
+  padding: 5px;
+  padding-left: 15px;
+  margin: 0 20px;
+  width: 100%;
+  display: flex;
+  @apply bg-white;
+  align-items: end;
+
+  > textarea {
+    padding-bottom: 6px;
+  }
+
+  > button {
+    background-color: black;
+    padding: 5px;
+    display: flex;
+    height: fit-content;
+  }
 }
 
-.user-input:focus {
-  border-bottom: 2px solid var(--yt-spec-text-primary) !important;
+html[dark] .user-input {
+  @apply bg-zinc-700;
 }
 
 #chat-box > button:hover {

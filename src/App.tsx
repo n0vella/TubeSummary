@@ -11,14 +11,16 @@ function SummaryPanel() {
 
   function submit(e) {
     e.preventDefault()
-    const value = e.currentTarget.userInput.value
+    const textarea: HTMLTextAreaElement = e.currentTarget.userInput
 
-    if (!value) {
+    if (!textarea.value) {
       return
     }
 
-    ask(value)
-    e.currentTarget.userInput.value = ''
+    ask(textarea.value)
+
+    textarea.style.height = 'auto'
+    textarea.value = ''
   }
 
   return (
@@ -56,18 +58,23 @@ function SummaryPanel() {
           }
         }}
       >
-        <textarea
-          name="userInput"
-          autoComplete="off"
-          className="user-input !mx-2 w-full resize-none !px-1 !py-0.5"
-          placeholder="Make your questions about this video"
-          rows={1}
-          onInput={(e) => {
-            const self = e.currentTarget
-            self.style.height = self.scrollHeight + 'px'
-          }}
-        ></textarea>
-        <button className="w-10 cursor-pointer">{send}</button>
+        <div className="user-input">
+          <textarea
+            name="userInput"
+            autoComplete="off"
+            className="w-full resize-none outline-none"
+            placeholder="Ask anything..."
+            rows={1}
+            onInput={(e) => {
+              const self = e.currentTarget
+              self.style.height = 'auto'
+              self.style.height = self.scrollHeight + 'px'
+            }}
+          ></textarea>
+          <button className="cursor-pointer rounded-full bg-zinc-900 text-white">
+            <span className="w-10">{send}</span>
+          </button>
+        </div>
       </form>
     </div>
   )
