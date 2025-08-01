@@ -33,15 +33,15 @@ function SummaryPanel() {
           case 'assistant':
           case 'error':
             return (
-              <div className="flex gap-5 align-top">
+              <div className="flex gap-8 !pr-6 align-top">
                 <span className="chat-avatar !bg-red-500 !p-1 !text-white">{brain}</span>
                 <div dangerouslySetInnerHTML={{ __html: marked.parse(content) as string }} className="markdown-box" />
               </div>
             )
           case 'user':
             return (
-              <div className="flex w-full justify-end gap-5 text-right align-top">
-                <div className="markdown-box justify-end whitespace-pre-line">{content}</div>
+              <div className="flex w-full justify-end gap-5 !pl-6 text-right align-top">
+                <div className="user-dialog markdown-box justify-end whitespace-pre-line">{content}</div>
                 <img src={avatarUrl} className="chat-avatar" />
               </div>
             )

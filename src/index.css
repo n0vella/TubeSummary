@@ -48,6 +48,14 @@ html[dark] .user-input {
   @apply bg-zinc-700;
 }
 
+.user-dialog {
+  @apply ml-6 rounded-3xl bg-zinc-200 p-4;
+}
+
+html[dark] .user-dialog {
+  @apply bg-zinc-700 text-white;
+}
+
 #chat-box > button:hover {
   stroke-width: 1.5px;
 }
