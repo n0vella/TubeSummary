@@ -8,6 +8,7 @@ import { openSettingsPage } from './utils'
 function SummaryPanel() {
   const [chat, ask, isResponding] = useChat()
   const avatarUrl = document.querySelector<HTMLImageElement>('#img')?.src
+  const [sendEnabled, setSendEnabled] = useState(false)
 
   function submit(e) {
     e.preventDefault()
@@ -21,6 +22,7 @@ function SummaryPanel() {
 
     textarea.style.height = 'auto'
     textarea.value = ''
+    setSendEnabled(false)
   }
 
   return (
@@ -69,10 +71,11 @@ function SummaryPanel() {
               const self = e.currentTarget
               self.style.height = 'auto'
               self.style.height = self.scrollHeight + 'px'
+              setSendEnabled(self.value.length > 0)
             }}
           ></textarea>
-          <button className="cursor-pointer rounded-full bg-zinc-900 text-white">
-            <span className="w-10">{send}</span>
+          <button disabled={!sendEnabled} title={sendEnabled ? '' : 'Message is empty'} className="cursor-pointer rounded-full text-white">
+            <span className="w-10">{brain}</span>
           </button>
         </div>
       </form>
