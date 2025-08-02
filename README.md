@@ -1,104 +1,124 @@
 <h1 align="center">TubeSummary</h1>
 <p align="center">
-    <a href="https://github.com/n0vella/TubeSummary">
-        <img src="https://raw.githubusercontent.com/n0vella/TubeSummary/master/icon.png" alt="logo" width="256" height="256" />
-    </a>
+  <a href="https://github.com/n0vella/TubeSummary">
+    <img src="https://raw.githubusercontent.com/n0vella/TubeSummary/master/icon.png" alt="TubeSummary logo" width="128" height="128" />
+  </a>
 </p>
 
-Browser extension to boost YouTube with AI-Powered summaries.
+<p align="center">
+  <b>AI-powered YouTube summaries in your browser</b>
+</p>
+<p align="center">
+  <i>Boost your learning and productivity by quickly extracting key insights from any YouTube video.</i>
+</p>
 
-# How it works?
+---
 
-Check out the new brain button at the end of your toolbar, this will trigger summarization.
+## Table of Contents
 
-- ![1](assets/readme/1.png)
+- [Features](#features)
+- [How It Works](#how-it-works)
+- [Supported API Providers](#supported-api-providers)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [Donations](#donations)
 
-Below the video, summary will be generated, you can even ask the AI about the video.
+---
 
-- ![2](assets/readme/2.png)
+## Features
 
-Clicking on the extension icon or middle-clikcing on the summarize button will open settings page in a new tab.
-Here you can customize the prompt and introduce your API provider credentials.
+- Summarize YouTube videos instantly with a single click
+- AI-powered follow-up Q&A below the video
+- Support for multiple LLM providers (OpenAI-compatible)
+- Prompts and provider credentials fully customizable
+- Works on latest Firefox, Chrome, and more
 
-- ![3](assets/readme/3.png)
+---
 
-After introducing credentials, if your provider supports it, you should see available models as model input options, also some extra model details will be shown.
+## How It Works
 
-# API providers
+1. **Trigger Summarization:**  
+   Click the **Brain** button at the end of your YouTube toolbar to generate a summary for the current video.
+   <br>  
+   ![Brain button screenshot](assets/readme/1.png)
+<br>
 
-To archieve this is mandatory to setup a OpenAI compatible API provider, you can use a paid one if you are subscribed or you can check this [list of free LLM resources](https://github.com/cheahjs/free-llm-api-resources)
+2. **View the Summary and Interact:**  
+   The summary appears below the video. You can ask the AI follow-up questions about the content.
+   <br><br>
+   ![Summary screenshot](assets/readme/2.png)
+<br>
 
-## Tested services
+3. **Access Settings:**  
+   Click the extension icon, or middle-click **Summarize**, to open the settings page in a new tab.
+   <br><br>
+   ![Settings screenshot](assets/readme/3.png)
+   <br>
+   Here you can:
+   - Customize the summarization prompt
+   - Enter your API provider credentials
+    <br>
+4. **Select Model:**  
+   After providing credentials, supported providers let you select available models and view further details.
 
-This extension is still in beta. It has been tested on the latest versions of Firefox and Chrome. It should work on other browsers as well, but I can't guarantee this.
+---
 
-This is a list of providers that have been tested with this extension, all of them have a free tier.
-It should work with any openai compatible provider anyways.
+## Supported API Providers
 
-### Openrouter
+> *An OpenAI-compatible API provider is required. Both free and paid options are supported.  
+> See this [list of free LLM APIs](https://github.com/cheahjs/free-llm-api-resources) for alternatives.*
 
-- Endpoint url: `https://openrouter.ai/api/v1/`
-- Docs: `https://openrouter.ai/docs/api-reference/overview`
+Tested providers (all offer a free tier as of writing):
 
-### Cerebras
+| Provider      | Endpoint URL                               | Documentation                                   |
+|---------------|--------------------------------------------|-------------------------------------------------|
+| OpenRouter    | `https://openrouter.ai/api/v1/`            | [Docs](https://openrouter.ai/docs/api-reference/overview)  |
+| Cerebras      | `https://api.cerebras.ai/v1/`              | [Docs](https://inference-docs.cerebras.ai/introduction)    |
+| Groq          | `https://api.groq.com/openai/v1`           | [Docs](https://console.groq.com/docs/api-reference)        |
+| Together AI   | `https://api.together.xyz/v1/`             | [Docs](https://api.together.ai/models)                     |
+| GitHub Models | `https://models.github.ai/inference`       | [Docs](https://github.com/marketplace/models)               |
+| Gemini *(not yet supported)* | `https://generativelanguage.googleapis.com/v1beta/openai/` | [Docs](https://ai.google.dev/gemini-api/docs/openai) |
 
-- Endpoint url: `https://api.cerebras.ai/v1/`
-- Docs: `https://inference-docs.cerebras.ai/introduction`
+---
 
-### Groq
+## Installation
 
-- Endpoint url: `https://api.groq.com/openai/v1`
-- Docs: `https://console.groq.com/docs/api-reference`
+### Firefox
 
-### Together AI
+Install directly from the Firefox Add-ons page:
 
-- Endpoint url: `https://api.together.xyz/v1/`
-- Docs: `https://api.together.ai/models`
+[![Get TubeSummary for Firefox](https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png)](https://addons.mozilla.org/en-US/firefox/addon/tubesummary/)
 
-### Github
-
-- Endpoint url: `https://models.github.ai/inference`
-- Docs: `https://github.com/marketplace/models`
-
-### Gemini (Doesn't work yet!)
-
-Looks like google openai implementation is still on beta and it didn't work yet
-
-- Endpoint url: `https://generativelanguage.googleapis.com/v1beta/openai/`
-- Docs: `https://ai.google.dev/gemini-api/docs/openai`
-
-# How to Install extension
-
-## Firefox
-
-Just install it from firefox addons page
-
-<a href="https://addons.mozilla.org/en-US/firefox/addon/tubesummary/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get TubeSummary for Firefox"></a>
-
-## Chrome
+### Chrome
 
 1. Go to [latest release](https://github.com/n0vella/TubeSummary/releases/latest)
-2. Download zip and unpack it
-3. Go to [chrome://extensions](chrome://extensions/)
-4. Turn developer mode on
-5. Install unpacked extension, just select the unpacked folder
+2. Download and unpack the zip file
+3. Navigate to `chrome://extensions/`
+4. Enable Developer mode
+5. Click "Load unpacked" and select the extension folder
 
-# Contributing
+---
+
+## Contributing
+
+Contributions and pull requests are encouraged! The codebase uses TypeScript + Vite + Preact + Tailwind.  
+If you have questions, feel free to open an issue.
+
+---
 
 ## Donations
 
-If you like this extension you can contribute buying me a cofee or whatever you want, that would be really great :)
+If you find TubeSummary useful, you can support further development:
 
-<div style="display: inline-flex; gap: 10px; align-items: center">
-    <a href="https://www.buymeacoffee.com/n0vella" target="_blank" rel="noopener">
-        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"
-        >
-    </a>
-    <a href="https://www.paypal.com/paypalme/n0velladev" target="_blank" rel="noopener">
-        <img src="https://www.paypalobjects.com/webstatic/icon/pp196.png" alt="Paypal" width="60" height="60" style="border-radius: 10px" />
-    </a>
-</div>
+<p align="left">
+  <a href="https://www.buymeacoffee.com/n0vella" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="150" alt="Buy Me A Coffee" />
+  </a>
+  &nbsp;
+  <a href="https://www.paypal.com/paypalme/n0velladev" target="_blank">
+    <img src="https://www.paypalobjects.com/webstatic/icon/pp196.png" width="40" alt="Paypal" />
+  </a>
+</p>
 
-## PR
+---
 
-Of course PRs are welcome, this extension uses a basic typescript + vite + preact + tailwind stack. Ask me if you have any questions.
