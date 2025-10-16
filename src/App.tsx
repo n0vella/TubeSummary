@@ -26,7 +26,7 @@ function SummaryPanel() {
   }
 
   return (
-    <div id="yt-summary-panel" className={`description-like !mt-8 flex w-full flex-col gap-10 ${chat.length > 0 && chat[0].role == 'error' ? (document.documentElement.hasAttribute('dark') ? '!bg-red-800' : '!bg-red-200') : ''}`}>
+    <div id="yt-summary-panel" className={`tube-summary description-like !mt-8 flex w-full flex-col gap-10 ${chat.length > 0 && chat[0].role == 'error' ? (document.documentElement.hasAttribute('dark') ? '!bg-red-800' : '!bg-red-200') : ''}`}>
       {chat.length <= 1 && chat[0]?.role !== 'error' && <div className="flex !h-24 animate-pulse justify-center">{brain}</div>}
       {chat.map(({ role, content }) => {
         switch (role) {
@@ -116,7 +116,7 @@ export default function App() {
   }
 
   return (
-    <div id="TubeSummary" className="relative">
+    <div id="TubeSummary" className="tube-summary relative">
       <button
         title={'TubeSummary - ' + (dialogLoaded ? 'Close summary' : 'Generate summary') + '\nMiddle click to open settings'}
         className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full p-2"

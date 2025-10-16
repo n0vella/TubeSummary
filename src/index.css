@@ -1,4 +1,10 @@
-@import 'tailwindcss';
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+.tube-summary {
+  @import 'tailwindcss/preflight.css' layer(base);
+}
 
 .description-like {
   background-color: var(--yt-spec-badge-chip-background);
