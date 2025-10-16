@@ -60,6 +60,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
         output: {
           compact: !isDevelopment,
           assetFileNames: 'index.css',
+          inlineDynamicImports: false,
         },
       },
     },
