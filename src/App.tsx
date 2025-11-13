@@ -107,6 +107,7 @@ export default function App() {
 
     if (!panel) {
       const container = document.createElement('div')
+      container.style.display = 'flex'
       root.current = createRoot(container)
 
       bottomRow.insertBefore(container, bottomRow.firstChild)
@@ -119,7 +120,7 @@ export default function App() {
     <div id="TubeSummary" className="tube-summary relative">
       <button
         title={'TubeSummary - ' + (dialogLoaded ? 'Close summary' : 'Generate summary') + '\nMiddle click to open settings'}
-        className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full p-2"
+        className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full stroke-[1.6] p-2"
         onMouseDown={(e: MouseEvent) => {
           if (e.button === 1) {
             e.preventDefault()
