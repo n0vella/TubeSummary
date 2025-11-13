@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "TubeSummary",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "description": "Summarizes videos and helps with your questions",
     "homepage_url": "https://n0vella.github.io",
     "icons": {
