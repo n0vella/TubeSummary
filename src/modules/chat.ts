@@ -63,8 +63,8 @@ export function useChat(): [Message[], typeof ask, boolean] {
 
     try {
       transcript = await getTranscript()
-    } catch {
-      setError('Trouble fetching transcription. Try waiting for the page to load completely.')
+    } catch (e) {
+      setError('Trouble fetching transcription: ' + e)
       return
     }
 
