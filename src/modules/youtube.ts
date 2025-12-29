@@ -59,11 +59,15 @@ export async function getTranscript() {
 
   const data = await fetchVideoData(videoId)
 
+  if (data.captions === undefined) {
+    throw "Looks like this video doesn't have captions"
+  }
+
   const captions = data.captions.playerCaptionsTracklistRenderer
 
   let defaultCaptionLanguage = captions.audioTracks[0].defaultCaptionTrackIndex ?? captions.defaultAudioTrackIndex ?? 0
 
-  if (defaultCaptionLanguage > captions.captionTracks.length) {
+  if (defaultCaptionLanguage > captions.captionTracks.length - 1) {
     // defaultCaptionLanguage could be a large number on audio-translated videos
     // TODO: check if this solution works in every case
     defaultCaptionLanguage = 0
