@@ -4,6 +4,7 @@ import { marked } from 'marked'
 import { brain, closeIcon } from './Icons'
 import { createRoot } from 'preact/compat/client'
 import { openSettingsPage } from './utils'
+import { MouseEvent } from 'preact/compat'
 
 function SummaryPanel() {
   const [chat, ask, isResponding] = useChat()
@@ -25,6 +26,29 @@ function SummaryPanel() {
     setSendEnabled(false)
   }
 
+  function handleLinkClick(e: MouseEvent<HTMLDivElement>) {
+    const target = e.target as HTMLElement
+
+    if (target.nodeName == 'A') {
+      const anchor = target as HTMLAnchorElement
+      const match = anchor.href.match(/\/watch\?v=\w+\&t=(\d+)/)
+
+      if (match) {
+        // timestamp links
+        e.preventDefault()
+        const time = match[1]
+
+        const video = document.querySelector<HTMLVideoElement>('video')
+
+        video.currentTime = Number(time)
+      } else {
+        anchor.target = '_blank'
+      }
+    }
+
+    e.preventDefault()
+  }
+
   return (
     <div id="yt-summary-panel" className={`tube-summary description-like !mt-8 flex w-full flex-col gap-10 ${chat.length > 0 && chat[0].role == 'error' ? (document.documentElement.hasAttribute('dark') ? '!bg-red-800' : '!bg-red-200') : ''}`}>
       {chat.length <= 1 && chat[0]?.role !== 'error' && <div className="flex !h-24 animate-pulse justify-center">{brain}</div>}
@@ -35,7 +59,7 @@ function SummaryPanel() {
             return (
               <div className="flex gap-8 !pr-6 align-top">
                 <span className="chat-avatar !bg-red-500 !p-1 !text-white">{brain}</span>
-                <div dangerouslySetInnerHTML={{ __html: marked.parse(content) as string }} className="markdown-box" />
+                <div onClick={handleLinkClick} dangerouslySetInnerHTML={{ __html: marked.parse(content) as string }} className="markdown-box" />
               </div>
             )
           case 'user':
@@ -121,7 +145,7 @@ export default function App() {
       <button
         title={'TubeSummary - ' + (dialogLoaded ? 'Close summary' : 'Generate summary') + '\nMiddle click to open settings'}
         className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full stroke-[1.6] p-2"
-        onMouseDown={(e: MouseEvent) => {
+        onMouseDown={(e: MouseEvent<HTMLButtonElement>) => {
           if (e.button === 1) {
             e.preventDefault()
             openSettingsPage()

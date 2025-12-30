@@ -14,9 +14,9 @@ export function useChat(): [Message[], typeof ask, boolean] {
       const secs = Math.floor(seconds % 60)
 
       if (hours) {
-        return hours + ':' + minutes.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0')
+        return hours + ':' + minutes + ':' + secs.toString().padStart(2, '0')
       } else {
-        return minutes.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0')
+        return minutes + ':' + secs.toString().padStart(2, '0')
       }
     }
 

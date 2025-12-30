@@ -89,6 +89,7 @@ html[dark] .user-dialog {
 
   a {
     color: rgb(6, 95, 212);
+    font-size: 1.2rem;
   }
 }
 
