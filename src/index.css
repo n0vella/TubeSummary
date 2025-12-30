@@ -88,7 +88,7 @@ html[dark] .user-dialog {
   }
 
   a {
-    color: rgb(6, 95, 212);
+    color: var(--yt-spec-call-to-action);
     font-size: 1.2rem;
   }
 }
