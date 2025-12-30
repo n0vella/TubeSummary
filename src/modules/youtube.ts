@@ -60,7 +60,7 @@ export async function getTranscript() {
   const data = await fetchVideoData(videoId)
 
   if (data.captions === undefined) {
-    throw "Looks like this video doesn't have captions"
+    throw "Looks like this video doesn't have captions or page didn't loaded completely."
   }
 
   const captions = data.captions.playerCaptionsTracklistRenderer
