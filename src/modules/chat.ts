@@ -20,7 +20,7 @@ export function useChat(): [Message[], typeof ask, boolean] {
       }
     }
 
-    const timestampRegex = /\[(\d+)s\]/g
+    const timestampRegex = /\[(\d+)\s?s\]/g
     const params = new URLSearchParams(window.location.search)
     const videoID = params.get('v')
 
