@@ -7,6 +7,26 @@ export function useChat(): [Message[], typeof ask, boolean] {
   const [chat, setChat] = useState<Message[]>([])
   const [isResponding, setIsresponging] = useState(true)
 
+  function parseTimestamps(msg: string) {
+    const secondsToTimeStr = (seconds: number) => {
+      const hours = Math.floor(seconds / 3600)
+      const minutes = Math.floor((seconds % 3600) / 60)
+      const secs = Math.floor(seconds % 60)
+
+      if (hours) {
+        return hours + ':' + minutes.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0')
+      } else {
+        return minutes.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0')
+      }
+    }
+
+    const timestampRegex = /\[(\d+)s\]/g
+    const params = new URLSearchParams(window.location.search)
+    const videoID = params.get('v')
+
+    return msg.replace(timestampRegex, (_match, seconds) => `[[${secondsToTimeStr(seconds)}]](/watch?v=${videoID}&t=${seconds})`)
+  }
+
   useEffect(() => {
     async function messageListener(message, sender, sendResponse) {
       if (sender.id !== chrome.runtime.id) {
@@ -19,7 +39,7 @@ export function useChat(): [Message[], typeof ask, boolean] {
             ...message.messages,
             {
               role: 'assistant',
-              content: message.text,
+              content: parseTimestamps(message.text),
             },
           ])
           return

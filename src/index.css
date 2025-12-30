@@ -71,20 +71,24 @@ html[dark] .user-dialog {
   flex-direction: column;
   gap: 12px;
 
-  > ul {
+  ul {
     list-style-type: disc;
     padding-left: 30px;
   }
-  > ol {
+  ol {
     list-style-type: decimal;
     padding-left: 30px;
   }
-  > h1 {
+  h1 {
     @apply text-lg font-semibold;
   }
-  > blockquote {
+  blockquote {
     @apply ml-2 border-l-2 pl-4 italic;
     border-color: var(--yt-spec-10-percent-layer);
+  }
+
+  a {
+    color: rgb(6, 95, 212);
   }
 }
 

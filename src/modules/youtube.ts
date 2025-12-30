@@ -90,8 +90,13 @@ export async function getTranscript() {
 
   for (const caption of xml.getElementsByTagName('text')) {
     const escapedText = caption.textContent ?? ''
+    const time = Number(caption.getAttribute('start'))
     const doc = entityParser.parseFromString(`<root>${escapedText}</root>`, 'text/xml')
     const text = doc.documentElement.textContent || ''
+
+    if (time) {
+      transcription += `[${Math.floor(time)}s]\n`
+    }
 
     transcription += text + '\n'
   }
