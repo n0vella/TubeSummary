@@ -7,7 +7,7 @@
 }
 
 .description-like {
-  background-color: var(--yt-spec-badge-chip-background);
+  background-color: var(--yt-spec-additive-background);
   font-family: 'Roboto', 'Arial', sans-serif;
   font-size: 1.4rem;
   padding: 12px;
