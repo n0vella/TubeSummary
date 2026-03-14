@@ -1,49 +1,21 @@
-import { YoutubeApiData } from '..'
+import { YoutubeApiData } from "../index"
 
-async function fetchVideoData(videoId: string): Promise<YoutubeApiData> {
-  // https://stackoverflow.com/questions/67615278/get-video-info-youtube-endpoint-suddenly-returning-404-not-found/68492807#68492807
-  const url = 'https://release-youtubei.sandbox.googleapis.com/youtubei/v1/player'
 
-  const payload = {
-    videoId,
-    context: {
-      client: {
-        hl: 'en',
-        clientName: 'WEB',
-        clientVersion: '2.20210721.00.00',
-      },
-      user: {
-        lockedSafetyMode: false,
-      },
-      request: {
-        useSsl: true,
-        internalExperimentFlags: [],
-        consistencyTokenJars: [],
-      },
-    },
-    playbackContext: {
-      contentPlaybackContext: {
-        vis: 0,
-        splay: false,
-        autoCaptionsDefaultOn: false,
-        autonavState: 'STATE_NONE',
-        html5Preference: 'HTML5_PREF_WANTS',
-        lactMilliseconds: '-1',
-      },
-    },
-    racyCheckOk: false,
-    contentCheckOk: false,
-  }
+function extractInnertubeApiKey() {
+  const pattern = '"INNERTUBE_API_KEY":\s*"([a-zA-Z0-9_-]+)"'
 
-  const r = await fetch(url, {
+  return document.documentElement.innerHTML.match(pattern).at(1)
+}
+
+async function fetchInnertubeData(videoId: string) {
+  const apiKey = extractInnertubeApiKey()
+
+  const r = await fetch('https://www.youtube.com/youtubei/v1/player?key=' + apiKey, {
+    body: JSON.stringify({
+      context: { client: { clientName: 'ANDROID', clientVersion: '20.10.38' } },
+      videoId,
+    }),
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    // redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(payload),
   })
 
   return await r.json()
@@ -57,10 +29,11 @@ export async function getTranscript() {
     return
   }
 
-  const data = await fetchVideoData(videoId)
+  const data: YoutubeApiData = await fetchInnertubeData(videoId)
+
 
   if (data.captions === undefined) {
-    throw "Looks like this video doesn't have captions or page didn't loaded completely."
+    throw "Looks like this video doesn't have captions or we had trouble fetching them"
   }
 
   const captions = data.captions.playerCaptionsTracklistRenderer
@@ -73,7 +46,8 @@ export async function getTranscript() {
     defaultCaptionLanguage = 0
   }
 
-  const captionsUrl = captions.captionTracks[defaultCaptionLanguage].baseUrl
+  const captionsUrl = new URL(captions.captionTracks[defaultCaptionLanguage].baseUrl)
+  captionsUrl.searchParams.set("fmt", "") // return basic xml
 
   const r = await fetch(captionsUrl)
 
@@ -83,7 +57,6 @@ export async function getTranscript() {
   const parser = new DOMParser()
 
   const xml = parser.parseFromString(xmlText, 'text/xml')
-  const jsonTranscript: any[] = []
   const entityParser = new DOMParser()
 
   let transcription = ''
