@@ -10,24 +10,24 @@
         "build": "vite build --config vite.config.settings.ts && vite build --config vite.config.bg.ts && vite build"
     },
     "devDependencies": {
-        "@preact/preset-vite": "^2.10.2",
-        "@tailwindcss/vite": "^4.1.11",
-        "@types/chrome": "^0.1.1",
-        "@types/firefox-webext-browser": "^120.0.4",
-        "@types/node": "^24.0.15",
+        "@preact/preset-vite": "^2.10.3",
+        "@tailwindcss/vite": "^4.2.1",
+        "@types/chrome": "^0.1.37",
+        "@types/firefox-webext-browser": "^120.0.5",
+        "@types/node": "^24.12.0",
         "archiver": "^7.0.1",
-        "autoprefixer": "^10.4.21",
+        "autoprefixer": "^10.4.27",
         "cross-env": "^7.0.3",
         "npm-run-all": "^4.1.5",
-        "postcss": "^8.5.6",
-        "prettier": "^3.6.2",
+        "postcss": "^8.5.8",
+        "prettier": "^3.8.1",
         "prettier-plugin-tailwindcss": "^0.6.14",
-        "tailwindcss": "^4.1.11",
-        "vite": "^7.0.5"
+        "tailwindcss": "^4.2.1",
+        "vite": "^7.3.1"
     },
     "dependencies": {
-        "marked": "^16.1.1",
-        "openai": "^5.10.2",
-        "preact": "^10.26.9"
+        "marked": "^16.4.2",
+        "openai": "^5.23.2",
+        "preact": "^10.29.0"
     }
 }
