@@ -23,6 +23,7 @@ export interface Settings {
   endpoint: string
   model: string
   apiKey: string
+  autoOpen: boolean
 }
 
 export type CSS_Selector = string
