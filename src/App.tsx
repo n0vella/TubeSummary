@@ -3,8 +3,9 @@ import { useChat } from './modules/chat'
 import { marked } from 'marked'
 import { brain, closeIcon } from './Icons'
 import { createRoot } from 'preact/compat/client'
-import { openSettingsPage } from './utils'
+import { openSettingsPage, readSettings } from './utils'
 import { MouseEvent } from 'preact/compat'
+import { getTranscript } from './modules/youtube'
 
 function SummaryPanel() {
   const [chat, ask, isResponding] = useChat()
@@ -111,6 +112,8 @@ export default function App() {
   const [dialogLoaded, setDialogLoaded] = useState(false)
   const root = useRef<ReturnType<typeof createRoot>>(null)
   const [showContext, setShowContext] = useState(false)
+  const [autoOpened, setAutoOpened] = useState(false)
+  const [hasCaption, setHasCaption] = useState<boolean | null>(null)
 
   function closeDialog() {
     setDialogLoaded(false)
@@ -118,12 +121,43 @@ export default function App() {
   }
 
   useEffect(() => {
-    window.addEventListener('yt-navigate-finish', closeDialog)
+    const handleNavigate = () => {
+      closeDialog()
+      setAutoOpened(false)
+      setHasCaption(null)
+    }
+    window.addEventListener('yt-navigate-finish', handleNavigate)
 
-    return () => window.removeEventListener('yt-navigate-finish', closeDialog)
+    return () => window.removeEventListener('yt-navigate-finish', handleNavigate)
   }, [])
 
-  function loadDialog() {
+  useEffect(() => {
+    checkCaption()
+  }, [])
+
+  useEffect(() => {
+    readSettings().then(async settings => {
+      if (settings.autoOpen && !autoOpened) {
+        setAutoOpened(true)
+        const ok = await checkCaption()
+        if (ok) loadDialog()
+      }
+    })
+  }, [autoOpened])
+
+  async function checkCaption() {
+    try {
+      const settings = await readSettings()
+      await getTranscript(settings.englishFirst)
+      setHasCaption(true)
+      return true
+    } catch {
+      setHasCaption(false)
+      return false
+    }
+  }
+
+  async function loadDialog() {
     setDialogLoaded(true)
     const bottomRow = document.querySelector<HTMLDivElement>('#bottom-row')!
 
@@ -140,21 +174,42 @@ export default function App() {
     }
   }
 
+  async function handleButtonClick(e: MouseEvent<HTMLButtonElement>) {
+    if (e.button === 1) {
+      e.preventDefault()
+      openSettingsPage()
+    } else {
+      if (dialogLoaded) {
+        closeDialog()
+      } else {
+        const hasCaptionNow = await checkCaption()
+        if (hasCaptionNow) {
+          loadDialog()
+        }
+      }
+    }
+  }
+
   return (
     <div id="TubeSummary" className="tube-summary relative">
       <button
-        title={'TubeSummary - ' + (dialogLoaded ? 'Close summary' : 'Generate summary') + '\nMiddle click to open settings'}
+        title={
+          hasCaption === false 
+            ? 'Trouble fetching transcription: Looks like this video doesn\'t have captions or we had trouble fetching them' 
+            : 'TubeSummary - ' + (dialogLoaded ? 'Close summary' : 'Generate summary') + '\nMiddle click to open settings'
+        }
         className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full stroke-[1.6] p-2"
-        onMouseDown={(e: MouseEvent<HTMLButtonElement>) => {
-          if (e.button === 1) {
-            e.preventDefault()
-            openSettingsPage()
-          } else {
-            dialogLoaded ? closeDialog() : loadDialog()
-          }
-        }}
+        disabled={hasCaption === false}
+        onMouseDown={handleButtonClick}
       >
-        {dialogLoaded ? closeIcon : brain}
+        {hasCaption === false ? (
+          <div className="relative inline-flex">
+            {brain}
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 24 24" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18" stroke="red" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+          </div>
+        ) : dialogLoaded ? closeIcon : brain}
       </button>
     </div>
   )

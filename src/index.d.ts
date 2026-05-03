@@ -1,5 +1,7 @@
 interface CaptionTrack {
   baseUrl: string
+  languageCode?: string
+  vssId?: string
 }
 
 interface AudioTrack {
@@ -23,6 +25,8 @@ export interface Settings {
   endpoint: string
   model: string
   apiKey: string
+  autoOpen: boolean
+  englishFirst: boolean
 }
 
 export type CSS_Selector = string

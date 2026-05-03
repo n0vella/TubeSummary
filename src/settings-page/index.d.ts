@@ -3,4 +3,6 @@ export interface SettingsForm extends HTMLFormElement {
   endpoint: HTMLInputElement
   model: HTMLInputElement
   apiKey: HTMLInputElement
+  autoOpen: HTMLInputElement
+  englishFirst: HTMLInputElement
 }
