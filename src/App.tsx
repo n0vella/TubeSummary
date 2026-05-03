@@ -194,14 +194,21 @@ export default function App() {
       <button
         title={
           hasCaption === false 
-            ? 'No captions available for this video' 
+            ? 'Trouble fetching transcription: Looks like this video doesn\'t have captions or we had trouble fetching them' 
             : 'TubeSummary - ' + (dialogLoaded ? 'Close summary' : 'Generate summary') + '\nMiddle click to open settings'
         }
-        className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full stroke-[1.6] p-2 disabled:cursor-not-allowed disabled:opacity-50"
+        className="yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono ml-3 flex aspect-square w-14 cursor-pointer rounded-full stroke-[1.6] p-2"
         disabled={hasCaption === false}
         onMouseDown={handleButtonClick}
       >
-        {dialogLoaded ? closeIcon : brain}
+        {hasCaption === false ? (
+          <div className="relative inline-flex">
+            {brain}
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 24 24" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18" stroke="red" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+          </div>
+        ) : dialogLoaded ? closeIcon : brain}
       </button>
     </div>
   )
