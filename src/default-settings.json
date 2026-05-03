@@ -3,5 +3,6 @@
     "endpoint": "",
     "model": "",
     "apiKey": "",
-    "autoOpen": false
+    "autoOpen": false,
+    "englishFirst": false
 }

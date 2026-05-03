@@ -147,7 +147,8 @@ export default function App() {
 
   async function checkCaption() {
     try {
-      await getTranscript()
+      const settings = await readSettings()
+      await getTranscript(settings.englishFirst)
       setHasCaption(true)
       return true
     } catch {

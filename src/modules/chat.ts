@@ -81,14 +81,14 @@ export function useChat(): [Message[], typeof ask, boolean] {
   async function loadSummary() {
     let transcript = ''
 
+    const settings = await readSettings()
+
     try {
-      transcript = await getTranscript()
+      transcript = await getTranscript(settings.englishFirst)
     } catch (e) {
       setError('Trouble fetching transcription: ' + e)
       return
     }
-
-    const settings = await readSettings()
 
     if (!settings.apiKey) {
       setError('You must configure a provider first')

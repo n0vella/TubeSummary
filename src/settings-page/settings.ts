@@ -19,6 +19,7 @@ async function loadSettings() {
   form.model.value = settings.model
   form.apiKey.value = settings.apiKey
   form.autoOpen.checked = settings.autoOpen
+  form.englishFirst.checked = settings.englishFirst
 }
 
 async function loadAvailableModels() {
@@ -67,6 +68,7 @@ async function onSubmit(e: SubmitEvent) {
       model: form.model.value,
       apiKey: form.apiKey.value,
       autoOpen: form.autoOpen.checked,
+      englishFirst: form.englishFirst.checked,
     },
   })
 
@@ -80,7 +82,7 @@ function onInput() {
     return
   }
 
-  button.disabled = form.prompt.value === settings.prompt && form.endpoint.value === settings.endpoint && form.model.value === settings.model && form.apiKey.value === settings.apiKey && form.autoOpen.checked === settings.autoOpen
+  button.disabled = form.prompt.value === settings.prompt && form.endpoint.value === settings.endpoint && form.model.value === settings.model && form.apiKey.value === settings.apiKey && form.autoOpen.checked === settings.autoOpen && form.englishFirst.checked === settings.englishFirst
 }
 
 function resetDefaultPrompt() {
