@@ -4,7 +4,8 @@
         "jsx": "react-jsx",
         "jsxImportSource": "preact",
         "resolveJsonModule": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "types": ["chrome"]
     },
     "include": [
         "src"
