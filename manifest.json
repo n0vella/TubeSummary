@@ -1,47 +1,32 @@
 {
-    "manifest_version": 3,
-    "name": "TubeSummary",
-    "version": "1.3.3",
-    "description": "Summarizes videos and helps with your questions",
-    "homepage_url": "https://n0vella.github.io",
-    "icons": {
-        "512": "icon.png"
-    },
-    "permissions": [
-        "tabs",
-        "activeTab",
-        "storage"
-    ],
-    "host_permissions": [
-        "<all_urls>"
-    ],
-    "background": {
-        "service_worker": "dist/bg/index.js",
-        "scripts": [
-            "dist/bg/index.js"
-        ]
-    },
-    "content_scripts": [
-        {
-            "matches": [
-                "https://www.youtube.com/*",
-                "https://www.youtube-nocookie.com/*"
-            ],
-            "js": [
-                "dist/content-script/index.js"
-            ],
-            "css": [
-                "dist/content-script/index.css"
-            ],
-            "all_frames": true
-        }
-    ],
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "{894c58f4-9197-4a7f-a993-602713ed4df3}"
-        }
-    },
-    "action": {
-        "default_title": "TubeSummary"
+  "manifest_version": 3,
+  "name": "TubeSummary",
+  "version": "1.3.3",
+  "description": "Summarizes videos and helps with your questions",
+  "homepage_url": "https://n0vella.github.io",
+  "icons": {
+    "512": "icon.png"
+  },
+  "permissions": ["tabs", "activeTab", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "dist/bg/index.js",
+    "scripts": ["dist/bg/index.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*", "https://www.youtube-nocookie.com/watch*"],
+      "js": ["dist/content-script/index.js"],
+      "css": ["dist/content-script/index.css"],
+      "all_frames": true
     }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{894c58f4-9197-4a7f-a993-602713ed4df3}"
+    }
+  },
+  "action": {
+    "default_title": "TubeSummary"
+  }
 }
