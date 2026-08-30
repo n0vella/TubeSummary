@@ -52,7 +52,7 @@ function SummaryPanel() {
   return (
     <div id="yt-summary-panel" className={`tube-summary description-like !mt-8 flex w-full flex-col gap-10 ${chat.length > 0 && chat[0].role == 'error' ? (document.documentElement.hasAttribute('dark') ? '!bg-red-800' : '!bg-red-200') : ''}`}>
       {chat.length <= 1 && chat[0]?.role !== 'error' && <div className="flex !h-24 animate-pulse justify-center">{brain}</div>}
-      {chat.map(({ role, content }) => {
+      {chat.map(({ role, content, hide }) => {
         switch (role) {
           case 'assistant':
           case 'error':
@@ -63,12 +63,14 @@ function SummaryPanel() {
               </div>
             )
           case 'user':
-            return (
-              <div className="flex w-full justify-end gap-5 !pl-6 text-right align-top">
-                <div className="user-dialog markdown-box justify-end whitespace-pre-line">{content}</div>
-                <img src={avatarUrl} className="chat-avatar" />
-              </div>
-            )
+            if (!hide) {
+              return (
+                <div className="flex w-full justify-end gap-5 !pl-6 text-right align-top">
+                  <div className="user-dialog markdown-box justify-end whitespace-pre-line">{content}</div>
+                  <img src={avatarUrl} className="chat-avatar" />
+                </div>
+              )
+            }
         }
       })}
 

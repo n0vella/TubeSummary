@@ -96,17 +96,15 @@ export function useChat(): [Message[], typeof ask, boolean] {
       return
     }
 
-    if (!settings.prompt.includes('{transcription}')) {
-      setError('Prompt must contain "{transcription}" flag')
-      return
-    }
-
-    const prompt = settings.prompt.replace('{transcription}', transcript)
-
     const messages: Message[] = [
       {
         role: 'system',
-        content: prompt,
+        content: settings.prompt,
+      },
+      {
+        role: 'user',
+        content: transcript,
+        hide: true,
       },
     ]
 
