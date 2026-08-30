@@ -1,58 +1,62 @@
-import OpenAI from 'openai'
+import { streamText } from 'ai'
+import { createOpenAICompatible } from '@ai-sdk/openai-compatible'
 import { Message, Settings } from '..'
 import { readSettings, storage } from '../utils'
 
-async function* call(messages: Message[], settings: Settings) {
-  const client = new OpenAI({
-    baseURL: settings.endpoint,
-    apiKey: settings.apiKey,
-    dangerouslyAllowBrowser: true,
-  })
-
-  const stream = await client.chat.completions.create({
-    model: settings.model,
-    messages,
-    stream: true,
-  })
-
-  for await (const chunk of stream) {
-    const delta = chunk.choices?.[0]?.delta?.content
-    if (delta) yield delta
-  }
+function describeError(e: unknown): string {
+  const err = e as Error & { statusCode?: number; responseBody?: string }
+  return [err?.statusCode && `HTTP ${err.statusCode}`, err?.message ?? String(e), err?.responseBody].filter(Boolean).join(' — ')
 }
 
 async function listModels(endpoint: string, apiKey: string) {
-  const client = new OpenAI({
-    baseURL: endpoint,
-    apiKey,
-    dangerouslyAllowBrowser: true,
+  const res = await fetch(`${endpoint.replace(/\/+$/, '')}/models`, {
+    headers: { Authorization: `Bearer ${apiKey}` },
   })
-
-  return (await client.models.list()).data
+  if (!res.ok) throw new Error(`HTTP ${res.status} — ${await res.text()}`)
+  return (await res.json()).data
 }
 
 const openSettings = () => chrome.tabs.create({ url: chrome.runtime.getURL('dist/settings/settings.html') })
 
 // listen orders from content scripts
 chrome.runtime.onMessage.addListener(function messageListener(message, sender, sendResponse) {
-  async function error(msg: string) {
-    await chrome.tabs.sendMessage(sender.tab.id, { action: 'error', errorText: msg })
-  }
+  const tabId = sender.tab?.id
+  const sendError = (e: unknown) => chrome.tabs.sendMessage(tabId, { action: 'error', errorText: describeError(e) })
 
   async function sendChunks() {
-    let text = ''
     const settings = await readSettings()
+    const provider = createOpenAICompatible({
+      name: 'provider',
+      baseURL: settings.endpoint,
+      apiKey: settings.apiKey,
+    })
+
+    let failed = false
+    const stream = streamText({
+      model: provider(settings.model),
+      instructions: message.messages[0].content,
+      messages: message.messages.slice(1),
+      // stream errors (402, 404, quota...) arrive here, not in the catch below
+      onError: ({ error }) => {
+        failed = true
+        sendError(error)
+      },
+    })
+
     try {
-      for await (const chunk of call(message.messages, settings)) {
-        text += chunk
-        await chrome.tabs.sendMessage(sender.tab.id, { action: 'modelChunk', messages: message.messages, text })
+      let text = ''
+      for await (const delta of stream.textStream) {
+        text += delta
+        await chrome.tabs.sendMessage(tabId, { action: 'modelChunk', messages: message.messages, text })
       }
     } catch (e) {
-      await error(e.message || String(e))
-      return false
+      // sync errors (bad config, messaging failures) also reach the frontend
+      failed = true
+      await sendError(e)
     }
 
-    await chrome.tabs.sendMessage(sender.tab.id, { action: 'modelEnd' })
+    if (failed) return false
+    await chrome.tabs.sendMessage(tabId, { action: 'modelEnd' })
     return true
   }
 
@@ -65,10 +69,12 @@ chrome.runtime.onMessage.addListener(function messageListener(message, sender, s
       sendResponse()
       return true
     case 'listModels':
-      listModels(message.endpoint, message.apiKey).then((models) => sendResponse(models))
+      listModels(message.endpoint, message.apiKey)
+        .then((models) => sendResponse(models))
+        .catch(sendError)
       return true
   }
 })
 
-// open settigns in a new tab when clicked extension button
+// open settings in a new tab when clicked extension button
 chrome.action.onClicked.addListener(openSettings)
